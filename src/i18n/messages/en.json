@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "sitio": "Carlos Romero — Data analysis and engineering",
+    "descripcion": "Portfolio of Carlos Romero, data analyst and data engineer based in Guayaquil, Ecuador.",
+    "sobreMi": "About",
+    "servicios": "Services",
+    "proyectos": "Projects",
+    "contacto": "Contact",
+    "privacidad": "Privacy notice"
+  },
+  "nav": {
+    "saltar": "Skip to content",
+    "principal": "Main navigation",
+    "inicio": "Home",
+    "sobreMi": "About",
+    "servicios": "Services",
+    "proyectos": "Projects",
+    "contacto": "Contact",
+    "idioma": "Language",
+    "cambiarIdioma": "View this page in English",
+    "menu": "Menu",
+    "cerrar": "Close menu",
+    "sinTraduccion": "That page is not available in English yet. Here is the project list."
+  },
+  "inicio": {
+    "disponible": "Available for projects",
+    "contactar": "Get in touch",
+    "descargarCV": "Download CV",
+    "verProyectos": "View projects",
+    "destacados": "Featured projects",
+    "queHago": "What I do",
+    "verServicios": "See all services"
+  },
+  "sobreMi": {
+    "titulo": "About",
+    "trayectoria": "Experience",
+    "formacion": "Education",
+    "certificaciones": "Certifications",
+    "idiomas": "Languages",
+    "obtenida": "Earned",
+    "enPreparacion": "In progress",
+    "credencialA": "Credential issued to {nombre}",
+    "vacioFormacion": "Education will be added here soon.",
+    "vacioTrayectoria": "Experience will be added here soon."
+  },
+  "servicios": {
+    "titulo": "Services",
+    "intro": "I work on a project basis. These are the areas where I can help.",
+    "cta": "Have a project in mind?",
+    "vacio": "Services will be published soon."
+  },
+  "proyectos": {
+    "titulo": "Projects",
+    "intro": "Each project answers a business question and walks through the whole process: data, method and result.",
+    "vacio": "No projects are published in this language yet.",
+    "todos": "All projects",
+    "anterior": "Previous project",
+    "siguiente": "Next project",
+    "repositorio": "Repository",
+    "pregunta": "Business question",
+    "problema": "Problem",
+    "datosLimpieza": "Data and cleaning",
+    "metodo": "Method",
+    "resultado": "Result",
+    "aprendizajes": "What I learned",
+    "capturas": "Screenshots",
+    "fuentes": "Sources",
+    "consultado": "accessed {fecha}",
+    "tecnologias": "Technologies",
+    "simulado": "SIMULATED DATA",
+    "avisoSimulado": "This chart uses simulated data for demonstration purposes. It does not represent real figures.",
+    "tablaDatos": "Table with the chart data",
+    "mes": "Month",
+    "valor": "Value",
+    "area": {
+      "analisis": "Data analysis",
+      "ingenieria": "Data engineering",
+      "ambos": "Analysis · Engineering"
+    }
+  },
+  "contacto": {
+    "titulo": "Contact",
+    "intro": "Tell me about your project. I reply by email.",
+    "nombre": "First name",
+    "apellido": "Last name",
+    "correo": "Email",
+    "pais": "Country",
+    "telefono": "Phone (optional)",
+    "area": "Area of interest",
+    "mensaje": "Message",
+    "enviar": "Send message",
+    "enviando": "Sending…",
+    "obligatorio": "required",
+    "privacidad": "By sending you agree to the processing of your data as described in the",
+    "avisoPrivacidad": "privacy notice",
+    "exito": "Thank you! I received your message and will reply soon.",
+    "error": "The message could not be sent. Check the fields and try again.",
+    "limite": "We received several messages from your connection. Please try again tomorrow.",
+    "verificacion": "We could not verify that you are not a robot. Reload the page and try again.",
+    "caracteres": "{n} of {max} characters",
+    "elige": "Choose an option",
+    "areas": {
+      "analisis": "Data analysis",
+      "bi": "Dashboards and Business Intelligence",
+      "ingenieria": "Data engineering / ETL",
+      "automatizacion": "Process automation",
+      "capacitacion": "Training",
+      "empleo": "Job offer",
+      "colaboracion": "Collaboration",
+      "otro": "Other (includes requests about your data)"
+    },
+    "errores": {
+      "requerido": "This field is required.",
+      "correo": "Enter a valid email.",
+      "telefono": "Digits only (6 to 14).",
+      "largo": "The text is too long."
+    }
+  },
+  "privacidad": {
+    "titulo": "Privacy notice",
+    "actualizado": "Last updated: {fecha}"
+  },
+  "cv": {
+    "titulo": "Curriculum vitae",
+    "perfil": "Profile",
+    "experiencia": "Experience",
+    "formacion": "Education",
+    "certificaciones": "Certifications",
+    "idiomas": "Languages",
+    "proyectos": "Projects",
+    "enPreparacion": "in progress"
+  },
+  "pie": {
+    "derechos": "© {anio} Carlos Romero",
+    "privacidad": "Privacy notice",
+    "hecho": "Built with Next.js and Payload"
+  },
+  "error": {
+    "noEncontrado": "Page not found",
+    "volver": "Back to home"
+  }
+}

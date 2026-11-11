@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "sitio": "Carlos Romero — Análisis e ingeniería de datos",
+    "descripcion": "Portafolio de Carlos Romero, analista e ingeniero de datos en Guayaquil, Ecuador.",
+    "sobreMi": "Sobre mí",
+    "servicios": "Servicios",
+    "proyectos": "Proyectos",
+    "contacto": "Contacto",
+    "privacidad": "Aviso de privacidad"
+  },
+  "nav": {
+    "saltar": "Saltar al contenido",
+    "principal": "Navegación principal",
+    "inicio": "Inicio",
+    "sobreMi": "Sobre mí",
+    "servicios": "Servicios",
+    "proyectos": "Proyectos",
+    "contacto": "Contacto",
+    "idioma": "Idioma",
+    "cambiarIdioma": "Ver esta página en español",
+    "menu": "Menú",
+    "cerrar": "Cerrar menú",
+    "sinTraduccion": "Esa página aún no está disponible en español. Aquí tienes el listado de proyectos."
+  },
+  "inicio": {
+    "disponible": "Disponible para proyectos",
+    "contactar": "Contactar",
+    "descargarCV": "Descargar CV",
+    "verProyectos": "Ver proyectos",
+    "destacados": "Proyectos destacados",
+    "queHago": "Qué hago",
+    "verServicios": "Ver todos los servicios"
+  },
+  "sobreMi": {
+    "titulo": "Sobre mí",
+    "trayectoria": "Trayectoria",
+    "formacion": "Formación",
+    "certificaciones": "Certificaciones",
+    "idiomas": "Idiomas",
+    "obtenida": "Obtenida",
+    "enPreparacion": "En preparación",
+    "credencialA": "Credencial a nombre de {nombre}",
+    "vacioFormacion": "Pronto agregaré mi formación aquí.",
+    "vacioTrayectoria": "Pronto agregaré mi trayectoria aquí."
+  },
+  "servicios": {
+    "titulo": "Servicios",
+    "intro": "Trabajo por proyectos. Estas son las áreas en las que puedo ayudarte.",
+    "cta": "¿Tienes un proyecto en mente?",
+    "vacio": "Pronto publicaré mis servicios."
+  },
+  "proyectos": {
+    "titulo": "Proyectos",
+    "intro": "Cada proyecto responde una pregunta de negocio y explica el proceso completo: datos, método y resultado.",
+    "vacio": "Aún no hay proyectos publicados en este idioma.",
+    "todos": "Todos los proyectos",
+    "anterior": "Proyecto anterior",
+    "siguiente": "Proyecto siguiente",
+    "repositorio": "Repositorio",
+    "pregunta": "Pregunta de negocio",
+    "problema": "Problema",
+    "datosLimpieza": "Datos y limpieza",
+    "metodo": "Método",
+    "resultado": "Resultado",
+    "aprendizajes": "Aprendizajes",
+    "capturas": "Capturas",
+    "fuentes": "Fuentes",
+    "consultado": "consultado el {fecha}",
+    "tecnologias": "Tecnologías",
+    "simulado": "DATOS SIMULADOS",
+    "avisoSimulado": "Este gráfico usa datos simulados con fines de demostración. No representa cifras reales.",
+    "tablaDatos": "Tabla con los datos del gráfico",
+    "mes": "Mes",
+    "valor": "Valor",
+    "area": {
+      "analisis": "Análisis de datos",
+      "ingenieria": "Ingeniería de datos",
+      "ambos": "Análisis · Ingeniería"
+    }
+  },
+  "contacto": {
+    "titulo": "Contacto",
+    "intro": "Cuéntame sobre tu proyecto. Respondo por correo.",
+    "nombre": "Nombre",
+    "apellido": "Apellido",
+    "correo": "Correo electrónico",
+    "pais": "País",
+    "telefono": "Teléfono (opcional)",
+    "area": "Área de interés",
+    "mensaje": "Mensaje",
+    "enviar": "Enviar mensaje",
+    "enviando": "Enviando…",
+    "obligatorio": "obligatorio",
+    "privacidad": "Al enviar aceptas el tratamiento de tus datos según el",
+    "avisoPrivacidad": "aviso de privacidad",
+    "exito": "¡Gracias! Recibí tu mensaje y te responderé pronto.",
+    "error": "No se pudo enviar el mensaje. Revisa los campos e inténtalo de nuevo.",
+    "limite": "Recibimos varios mensajes desde tu conexión. Inténtalo de nuevo mañana.",
+    "verificacion": "No pudimos verificar que no eres un robot. Recarga la página e inténtalo otra vez.",
+    "caracteres": "{n} de {max} caracteres",
+    "elige": "Elige una opción",
+    "areas": {
+      "analisis": "Análisis de datos",
+      "bi": "Dashboards y Business Intelligence",
+      "ingenieria": "Ingeniería de datos / ETL",
+      "automatizacion": "Automatización de procesos",
+      "capacitacion": "Capacitación",
+      "empleo": "Oferta de empleo",
+      "colaboracion": "Colaboración",
+      "otro": "Otro (incluye solicitudes sobre tus datos)"
+    },
+    "errores": {
+      "requerido": "Este campo es obligatorio.",
+      "correo": "Escribe un correo válido.",
+      "telefono": "Escribe solo números (6 a 14 dígitos).",
+      "largo": "El texto es demasiado largo."
+    }
+  },
+  "privacidad": {
+    "titulo": "Aviso de privacidad",
+    "actualizado": "Última actualización: {fecha}"
+  },
+  "cv": {
+    "titulo": "Curriculum vitae",
+    "perfil": "Perfil",
+    "experiencia": "Experiencia",
+    "formacion": "Formación",
+    "certificaciones": "Certificaciones",
+    "idiomas": "Idiomas",
+    "proyectos": "Proyectos",
+    "enPreparacion": "en preparación"
+  },
+  "pie": {
+    "derechos": "© {anio} Carlos Romero",
+    "privacidad": "Aviso de privacidad",
+    "hecho": "Hecho con Next.js y Payload"
+  },
+  "error": {
+    "noEncontrado": "Página no encontrada",
+    "volver": "Volver al inicio"
+  }
+}
