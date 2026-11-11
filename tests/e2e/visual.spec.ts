@@ -10,7 +10,9 @@ test.describe('visual y accesibilidad', () => {
         if (m.type() === 'error' && /Content Security Policy|Refused to/i.test(m.text())) violacionesCsp.push(m.text())
       })
       await page.goto(ruta)
-      await page.waitForLoadState('networkidle')
+      // 'networkidle' nunca llega en /contacto: Turnstile mantiene conexiones abiertas.
+      await page.waitForLoadState('load')
+      await page.waitForTimeout(500)
       const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()
       const graves = axe.violations.filter((v) => v.impact === 'critical' || v.impact === 'serious')
       expect(graves.map((v) => `${v.id}: ${v.nodes.map((n) => n.target).join(' | ')}`)).toEqual([])
