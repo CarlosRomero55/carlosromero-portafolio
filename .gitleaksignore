@@ -1,0 +1,2 @@
+# Falso positivo: clave de prueba del CI (base temporal), no es un secreto real.
+a748d65a0e4f25e3d87f2c57024018f1f72294f5:.github/workflows/ci.yml:generic-api-key:39
