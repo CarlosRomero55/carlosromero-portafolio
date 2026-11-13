@@ -1,11 +1,14 @@
 import { getTranslations } from 'next-intl/server'
 import type { Locale, RutaInterna } from '@/i18n/routing'
+import { getArticulos } from '@/lib/data/public'
 import { ruta, type Alternas } from '@/lib/rutas'
 
-const ENLACES: { href: RutaInterna; clave: 'sobreMi' | 'servicios' | 'proyectos' | 'contacto' }[] = [
+type Enlace = { href: RutaInterna; clave: 'sobreMi' | 'servicios' | 'proyectos' | 'articulos' | 'contacto' }
+const ENLACES: Enlace[] = [
   { href: '/about', clave: 'sobreMi' },
   { href: '/services', clave: 'servicios' },
   { href: '/projects', clave: 'proyectos' },
+  { href: '/articles', clave: 'articulos' },
   { href: '/contact', clave: 'contacto' },
 ]
 
@@ -14,11 +17,17 @@ type Props = { locale: Locale; actual: RutaInterna; alternas: Alternas }
 export async function Encabezado({ locale, actual, alternas }: Props) {
   const t = await getTranslations({ locale, namespace: 'nav' })
   const tOtro = (l: Locale) => getTranslations({ locale: l, namespace: 'nav' })
+  // "Artículos" aparece en el menú solo cuando hay al menos uno publicado en este idioma.
+  const hayArticulos = (await getArticulos(locale)).length > 0
+  const enlaces = ENLACES.filter((e) => e.href !== '/articles' || hayArticulos)
 
   const lista = (
     <ul className="nav__lista">
-      {ENLACES.map((e) => {
-        const activo = actual === e.href || (e.href === '/projects' && actual === '/projects/[slug]')
+      {enlaces.map((e) => {
+        const activo =
+          actual === e.href ||
+          (e.href === '/projects' && actual === '/projects/[slug]') ||
+          (e.href === '/articles' && actual === '/articles/[slug]')
         return (
           <li key={e.href}>
             <a className="nav__enlace" href={ruta(locale, e.href)} aria-current={activo ? 'page' : undefined}>

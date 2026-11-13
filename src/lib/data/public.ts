@@ -110,6 +110,21 @@ export type ServicioPublico = {
   ejemplo: { titulo: string; slug: string } | null
   demoUrl: string | null
 }
+export type ArticuloTarjeta = {
+  id: string
+  titulo: string
+  slug: string
+  fecha: string
+  resumen: string
+  etiquetas: string[]
+  portada: ImagenPublica | null
+}
+export type ArticuloDetalle = ArticuloTarjeta & {
+  contenido: RichText
+  proyecto: { titulo: string; slug: string } | null
+  seoTitulo: string | null
+  seoDescripcion: string | null
+}
 export type IdiomaPublico = { id: string; idioma: string; nivel: string }
 
 const str = (v: unknown): string => (typeof v === 'string' ? v : '')
@@ -153,7 +168,7 @@ function cacheado<A extends unknown[], R>(nombre: string, fn: (...a: A) => Promi
   const conCache = unstable_cache(fn, [nombre], { tags: [TAG_CONTENIDO], revalidate: 3600 })
   // Ningún valor que no sea 'es' o 'en' llega nunca a la base de datos.
   return (...args: A): Promise<R> => {
-    const locale = nombre === 'slug-alterno' ? args[1] : args[0]
+    const locale = nombre.startsWith('slug-alterno') ? args[1] : args[0]
     if (!esLocale(locale)) notFound()
     return conCache(...args)
   }
@@ -366,4 +381,60 @@ export const getServicios = cacheado('servicios', async (locale: Locale): Promis
 
 export const getIdiomas = cacheado('idiomas', async (locale: Locale): Promise<IdiomaPublico[]> =>
   (await buscar('idiomas', locale)).map((d) => ({ id: id(d.id), idioma: str(d.idioma), nivel: str(d.nivel) })),
+)
+
+function articuloTarjeta(d: Rec, locale: Locale): ArticuloTarjeta {
+  return {
+    id: id(d.id),
+    titulo: str(d.titulo),
+    slug: str(d.slug),
+    fecha: str(d.fecha),
+    resumen: str(d.resumen),
+    etiquetas: lista(d.etiquetas),
+    portada: imagenORuta(d.portada, d.portadaRuta, d.portadaAlt, locale),
+  }
+}
+
+async function buscarArticulos(locale: Locale, where: Where) {
+  const p = await payload()
+  const res = await p.find({
+    collection: 'articulos',
+    locale,
+    fallbackLocale: false,
+    where,
+    depth: 1,
+    limit: 100,
+    sort: '-fecha',
+    pagination: false,
+  })
+  return res.docs as unknown as Rec[]
+}
+
+export const getArticulos = cacheado('articulos', async (locale: Locale): Promise<ArticuloTarjeta[]> =>
+  (await buscarArticulos(locale, publicado)).map((d) => articuloTarjeta(d, locale)),
+)
+
+export const getArticulo = cacheado(
+  'articulo',
+  async (locale: Locale, slug: string): Promise<ArticuloDetalle | null> => {
+    const d = (await buscarArticulos(locale, { and: [publicado, { slug: { equals: slug } }] }))[0]
+    if (!d) return null
+    const pr = d.proyecto && typeof d.proyecto === 'object' ? (d.proyecto as Rec) : null
+    const seo = (d.seo ?? {}) as Rec
+    return {
+      ...articuloTarjeta(d, locale),
+      contenido: rich(d.contenido),
+      proyecto: pr && pr.publicado === true && str(pr.slug) ? { titulo: str(pr.titulo), slug: str(pr.slug) } : null,
+      seoTitulo: strN(seo.titulo),
+      seoDescripcion: strN(seo.descripcion),
+    }
+  },
+)
+
+export const getSlugAlternoArticulo = cacheado(
+  'slug-alterno-articulo',
+  async (idArticulo: string, otro: Locale): Promise<string | null> => {
+    const docs = await buscarArticulos(otro, { and: [publicado, { id: { equals: idArticulo } }] })
+    return docs[0] ? strN(docs[0].slug) : null
+  },
 )

@@ -1,6 +1,7 @@
 import * as migration_20261111_181903_inicial from './20261111_181903_inicial';
 import * as migration_20261113_182146_blob_storage from './20261113_182146_blob_storage';
 import * as migration_20261113_195519_caso_estudio_y_catalogo from './20261113_195519_caso_estudio_y_catalogo';
+import * as migration_20261113_204237_articulos from './20261113_204237_articulos';
 
 export const migrations = [
   {
@@ -16,6 +17,11 @@ export const migrations = [
   {
     up: migration_20261113_195519_caso_estudio_y_catalogo.up,
     down: migration_20261113_195519_caso_estudio_y_catalogo.down,
-    name: '20261113_195519_caso_estudio_y_catalogo'
+    name: '20261113_195519_caso_estudio_y_catalogo',
+  },
+  {
+    up: migration_20261113_204237_articulos.up,
+    down: migration_20261113_204237_articulos.down,
+    name: '20261113_204237_articulos'
   },
 ];

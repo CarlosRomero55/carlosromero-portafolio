@@ -24,3 +24,7 @@ export function urlAbsoluta(path: string): string {
 export function otroLocale(l: Locale): Locale {
   return l === 'es' ? 'en' : 'es'
 }
+
+export function rutaArticulo(locale: Locale, slug: string): string {
+  return getPathname({ locale, href: { pathname: '/articles/[slug]', params: { slug } } })
+}

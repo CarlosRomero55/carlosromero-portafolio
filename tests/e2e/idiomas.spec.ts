@@ -31,14 +31,22 @@ test.describe('idiomas', () => {
     })
   }
 
-  test('un proyecto sin inglés publicado no aparece en /en y su URL da 404', async ({ page, request }) => {
-    await page.goto('/en/projects')
-    await expect(page.locator('[data-proyecto="shrimp-intelligence-ecuador"]')).toHaveCount(0)
-    expect((await request.get('/en/projects/shrimp-intelligence-ecuador')).status()).toBe(404)
-    await page.goto('/es/proyectos/shrimp-intelligence-ecuador')
+  test('cada idioma tiene su propio slug y el selector lleva a la versión equivalente', async ({ page, request }) => {
+    // El slug en español no existe en inglés (y al revés): cada idioma tiene su dirección.
+    expect((await request.get('/en/projects/sistema-escolar')).status()).toBe(404)
+    expect((await request.get('/es/proyectos/school-management-system')).status()).toBe(404)
+    await page.goto('/es/proyectos/sistema-escolar')
     await page.locator('.idiomas a[hreflang="en"]').click()
-    await expect(page).toHaveURL(/\/en\/projects\?aviso=sin-traduccion$/)
-    await expect(page.getByRole('status')).toContainText('not available in English')
+    await expect(page).toHaveURL(/\/en\/projects\/school-management-system$/)
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en')
+    await page.goto('/es/articulos/cuando-las-fuentes-no-coinciden')
+    await page.locator('.idiomas a[hreflang="en"]').click()
+    await expect(page).toHaveURL(/\/en\/articles\/when-sources-dont-match$/)
+  })
+
+  test('una página sin traducción lleva al listado con aviso', async ({ page }) => {
+    await page.goto('/en/projects?aviso=sin-traduccion')
+    await expect(page.getByRole('status')).toContainText('not available')
   })
 
   test('un locale no permitido da 404', async ({ request }) => {

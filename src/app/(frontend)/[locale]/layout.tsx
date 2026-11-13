@@ -1,6 +1,7 @@
 import '@fontsource/fira-code/500.css'
 import '@fontsource-variable/inter'
 import '@/styles/global.css'
+import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { notFound } from 'next/navigation'
 import { hasLocale } from 'next-intl'
@@ -41,6 +42,8 @@ export default async function Layout({
           {t('saltar')}
         </a>
         {children}
+        {/* Fase 6: estadísticas sin cookies. Se activa con NEXT_PUBLIC_ANALYTICS=true en Vercel. */}
+        {process.env.NEXT_PUBLIC_ANALYTICS === 'true' && <Analytics />}
       </body>
     </html>
   )

@@ -6,6 +6,15 @@ name: Cargar o actualizar contenido
 # Nunca borra registros. Se puede ejecutar las veces que quieras.
 on:
   workflow_dispatch:
+    inputs:
+      publicar_ingles:
+        description: 'Publicar el inglés (después de revisarlo)'
+        type: boolean
+        default: false
+      publicar_articulo:
+        description: 'Publicar el artículo (después de revisarlo)'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -44,6 +53,11 @@ jobs:
         run: pnpm seed
       - name: Actualizaciones de contenido (v2)
         run: pnpm contenido
+      - name: Inglés y artículo (v3)
+        env:
+          PUBLICAR_INGLES: ${{ inputs.publicar_ingles }}
+          PUBLICAR_ARTICULO: ${{ inputs.publicar_articulo }}
+        run: pnpm contenido:v3
       - name: Siguiente paso
         run: |
           echo "### Contenido listo" >> "$GITHUB_STEP_SUMMARY"

@@ -239,6 +239,7 @@ export default async function DetalleProyecto({ params }: P) {
               ))}
             </div>
           )}
+          {p.demo && /^https:\/\/[^/]+\.onrender\.com(\/|$)/.test(p.demo) && <p className="aviso-demo">{t('demoLenta')}</p>}
           <div className="caso-principal">
             {principal ? <Ventana imagen={principal} titulo={tituloPrincipal} prioridad /> : <div />}
             <aside className="tarjeta-base ficha" aria-label={t('fichaTitulo')}>

@@ -39,6 +39,12 @@ export default async function Privacidad({ params }: P) {
       </header>
       <section className="contenedor" data-section="texto" style={{ paddingBottom: 'var(--space-6)' }}>
         <Prosa data={textos.avisoPrivacidad} />
+        {process.env.NEXT_PUBLIC_ANALYTICS === 'true' && (
+          <div className="prosa" data-section="analitica">
+            <h3>{t('analiticaTitulo')}</h3>
+            <p>{t('analiticaTexto')}</p>
+          </div>
+        )}
       </section>
     </Pagina>
   )

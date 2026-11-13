@@ -6,7 +6,8 @@
     "servicios": "Servicios",
     "proyectos": "Proyectos",
     "contacto": "Contacto",
-    "privacidad": "Aviso de privacidad"
+    "privacidad": "Aviso de privacidad",
+    "articulos": "Artículos"
   },
   "nav": {
     "saltar": "Saltar al contenido",
@@ -20,7 +21,8 @@
     "cambiarIdioma": "Ver esta página en español",
     "menu": "Menú",
     "cerrar": "Cerrar menú",
-    "sinTraduccion": "Esa página aún no está disponible en español. Aquí tienes el listado de proyectos."
+    "sinTraduccion": "Esa página aún no está disponible en español. Aquí tienes el listado de proyectos.",
+    "articulos": "Artículos"
   },
   "inicio": {
     "disponible": "Disponible para proyectos",
@@ -141,7 +143,8 @@
     "simNota": "Millones de USD. Incluye 301 M USD sin desglose por región. Fuente: datos del proyecto (BCE + UN Comtrade).",
     "simLeyendaReal": "Real 2024",
     "simLeyendaEsc": "Escenario",
-    "simRegiones": "Valor exportado por región"
+    "simRegiones": "Valor exportado por región",
+    "demoLenta": "La demo está en un servidor gratuito: la primera carga puede tardar cerca de un minuto."
   },
   "contacto": {
     "titulo": "Contacto",
@@ -183,7 +186,9 @@
   },
   "privacidad": {
     "titulo": "Aviso de privacidad",
-    "actualizado": "Última actualización: {fecha}"
+    "actualizado": "Última actualización: {fecha}",
+    "analiticaTitulo": "Estadísticas de visitas",
+    "analiticaTexto": "Para saber qué páginas se visitan uso Vercel Web Analytics, una herramienta sin cookies. No identifica a las personas: registra datos agregados como la página, el país, el tipo de dispositivo y el navegador, y la sesión se descarta a las 24 horas."
   },
   "cv": {
     "titulo": "Curriculum vitae",
@@ -203,5 +208,16 @@
   "error": {
     "noEncontrado": "Página no encontrada",
     "volver": "Volver al inicio"
+  },
+  "articulos": {
+    "eyebrow": "// ARTÍCULOS",
+    "titulo": "Artículos",
+    "intro": "Notas sobre cómo trabajo con datos: decisiones, errores y lo que aprendí en cada proyecto.",
+    "vacio": "Pronto publicaré el primer artículo.",
+    "leer": "Leer artículo",
+    "todos": "Todos los artículos",
+    "publicado": "Publicado el {fecha}",
+    "relacionado": "Proyecto relacionado",
+    "verCaso": "Ver el caso"
   }
 }

@@ -9,6 +9,7 @@ import { payloadTotp } from 'payload-totp'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
+import { Articulos } from './collections/Articulos'
 import { Certificaciones, Formacion } from './collections/Formacion'
 import { Mensajes, RateLimit } from './collections/Internas'
 import { Media } from './collections/Media'
@@ -48,6 +49,7 @@ export default buildConfig({
   graphQL: { disable: true },
   collections: [
     Proyectos,
+    Articulos,
     Trayectoria,
     Formacion,
     Certificaciones,

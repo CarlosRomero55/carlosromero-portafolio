@@ -1,11 +1,11 @@
 import type { MetadataRoute } from 'next'
 import { routing, type RutaInterna } from '@/i18n/routing'
-import { getProyectos } from '@/lib/data/public'
-import { ruta, rutaProyecto, urlAbsoluta } from '@/lib/rutas'
+import { getArticulos, getProyectos } from '@/lib/data/public'
+import { ruta, rutaArticulo, rutaProyecto, urlAbsoluta } from '@/lib/rutas'
 
 export const dynamic = 'force-dynamic'
 
-const ESTATICAS: RutaInterna[] = ['/', '/about', '/services', '/projects', '/contact', '/privacy']
+const ESTATICAS: RutaInterna[] = ['/', '/about', '/services', '/projects', '/articles', '/contact', '/privacy']
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entradas: MetadataRoute.Sitemap = []
@@ -17,6 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
   for (const l of routing.locales) {
     for (const p of await getProyectos(l)) entradas.push({ url: urlAbsoluta(rutaProyecto(l, p.slug)) })
+    for (const a of await getArticulos(l)) entradas.push({ url: urlAbsoluta(rutaArticulo(l, a.slug)), lastModified: a.fecha })
   }
   return entradas
 }

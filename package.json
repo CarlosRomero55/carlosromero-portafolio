@@ -23,7 +23,8 @@
     "test:scan": "tsx scripts/scan-public.ts",
     "test:all": "pnpm test:unit && pnpm test:e2e && pnpm test:scan",
     "ci": "pnpm migrate && pnpm build",
-    "contenido": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/contenido-v2.ts"
+    "contenido": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/contenido-v2.ts",
+    "contenido:v3": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/contenido-v3.ts"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",
@@ -35,6 +36,7 @@
     "@payloadcms/translations": "3.93.0",
     "@payloadcms/ui": "3.93.0",
     "@react-pdf/renderer": "4.9.0",
+    "@vercel/analytics": "2.0.1",
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",
     "next": "16.4.6",

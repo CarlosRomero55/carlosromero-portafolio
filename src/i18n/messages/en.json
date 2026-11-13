@@ -6,7 +6,8 @@
     "servicios": "Services",
     "proyectos": "Projects",
     "contacto": "Contact",
-    "privacidad": "Privacy notice"
+    "privacidad": "Privacy notice",
+    "articulos": "Articles"
   },
   "nav": {
     "saltar": "Skip to content",
@@ -20,7 +21,8 @@
     "cambiarIdioma": "View this page in English",
     "menu": "Menu",
     "cerrar": "Close menu",
-    "sinTraduccion": "That page is not available in English yet. Here is the project list."
+    "sinTraduccion": "That page is not available in English yet. Here is the project list.",
+    "articulos": "Articles"
   },
   "inicio": {
     "disponible": "Available for projects",
@@ -141,7 +143,8 @@
     "simNota": "USD millions. Includes USD 301 M without a regional breakdown. Source: project data (BCE + UN Comtrade).",
     "simLeyendaReal": "Actual 2024",
     "simLeyendaEsc": "Scenario",
-    "simRegiones": "Export value by region"
+    "simRegiones": "Export value by region",
+    "demoLenta": "The demo runs on a free server: the first load can take about a minute."
   },
   "contacto": {
     "titulo": "Contact",
@@ -183,7 +186,9 @@
   },
   "privacidad": {
     "titulo": "Privacy notice",
-    "actualizado": "Last updated: {fecha}"
+    "actualizado": "Last updated: {fecha}",
+    "analiticaTitulo": "Visit statistics",
+    "analiticaTexto": "To know which pages are visited I use Vercel Web Analytics, a cookie-free tool. It does not identify people: it records aggregated data such as the page, country, device type and browser, and the session is discarded after 24 hours."
   },
   "cv": {
     "titulo": "Curriculum vitae",
@@ -203,5 +208,16 @@
   "error": {
     "noEncontrado": "Page not found",
     "volver": "Back to home"
+  },
+  "articulos": {
+    "eyebrow": "// ARTICLES",
+    "titulo": "Articles",
+    "intro": "Notes on how I work with data: decisions, mistakes and what I learned in each project.",
+    "vacio": "The first article is coming soon.",
+    "leer": "Read article",
+    "todos": "All articles",
+    "publicado": "Published {fecha}",
+    "relacionado": "Related project",
+    "verCaso": "View the case"
   }
 }

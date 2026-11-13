@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     proyectos: Proyecto;
+    articulos: Articulo;
     trayectoria: Trayectoria;
     formacion: Formacion;
     certificaciones: Certificacione;
@@ -87,6 +88,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     proyectos: ProyectosSelect<false> | ProyectosSelect<true>;
+    articulos: ArticulosSelect<false> | ArticulosSelect<true>;
     trayectoria: TrayectoriaSelect<false> | TrayectoriaSelect<true>;
     formacion: FormacionSelect<false> | FormacionSelect<true>;
     certificaciones: CertificacionesSelect<false> | CertificacionesSelect<true>;
@@ -403,6 +405,55 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articulos".
+ */
+export interface Articulo {
+  id: number;
+  /**
+   * Can only be checked when every required field in this language is complete.
+   */
+  publicado?: boolean | null;
+  /**
+   * Menor número = aparece primero
+   */
+  orden?: number | null;
+  titulo?: string | null;
+  slug?: string | null;
+  fecha: string;
+  resumen?: string | null;
+  portada?: (number | null) | Media;
+  portadaRuta?: string | null;
+  portadaAlt?: string | null;
+  contenido?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Ej.: Power BI, Python
+   */
+  etiquetas?: string[] | null;
+  proyecto?: (number | null) | Proyecto;
+  seo?: {
+    titulo?: string | null;
+    descripcion?: string | null;
+  };
+  notasInternas?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "trayectoria".
  */
 export interface Trayectoria {
@@ -647,6 +698,10 @@ export interface PayloadLockedDocument {
         value: number | Proyecto;
       } | null)
     | ({
+        relationTo: 'articulos';
+        value: number | Articulo;
+      } | null)
+    | ({
         relationTo: 'trayectoria';
         value: number | Trayectoria;
       } | null)
@@ -827,6 +882,33 @@ export interface ProyectosSelect<T extends boolean = true> {
         id?: T;
       };
   repositorio?: T;
+  seo?:
+    | T
+    | {
+        titulo?: T;
+        descripcion?: T;
+      };
+  notasInternas?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articulos_select".
+ */
+export interface ArticulosSelect<T extends boolean = true> {
+  publicado?: T;
+  orden?: T;
+  titulo?: T;
+  slug?: T;
+  fecha?: T;
+  resumen?: T;
+  portada?: T;
+  portadaRuta?: T;
+  portadaAlt?: T;
+  contenido?: T;
+  etiquetas?: T;
+  proyecto?: T;
   seo?:
     | T
     | {
