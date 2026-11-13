@@ -23,7 +23,13 @@ En tu computadora, abre una terminal y ejecuta dos veces:
 openssl rand -hex 32
 ```
 
-(En Windows sin openssl: https://www.random.org/strings/ con 64 caracteres hexadecimales.)
+En **Windows**, abre **PowerShell** (menú Inicio → escribe "PowerShell") y pega esta línea completa:
+
+```
+$b = New-Object byte[] 32; [Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($b); ($b | % { $_.ToString('x2') }) -join ''
+```
+
+Cada vez que la ejecutes te da una clave nueva de 64 caracteres (números y letras de la a a la f). No uses generadores de páginas web: la clave debe nacer en tu computadora.
 
 - El primer resultado es **`PAYLOAD_SECRET`**.
 - El segundo es **`RATE_LIMIT_SECRET`**.
