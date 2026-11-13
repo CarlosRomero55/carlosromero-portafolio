@@ -24,13 +24,14 @@ test.describe('proyectos, casos y catálogo', () => {
 
   test('los filtros de proyectos separan datos y sistemas web', async ({ page }) => {
     await page.goto('/es/proyectos?tipo=web')
-    await expect(page.locator('[data-proyecto]')).toHaveCount(1)
+    await expect(page.locator('[data-proyecto]')).toHaveCount(2)
     await expect(page.locator('[data-proyecto="sistema-escolar"]')).toBeVisible()
+    await expect(page.locator('[data-proyecto="inventario-punto-de-venta"]')).toBeVisible()
     await page.goto('/es/proyectos?tipo=datos')
     await expect(page.locator('[data-proyecto="shrimp-intelligence-ecuador"]')).toBeVisible()
     await expect(page.locator('[data-proyecto="sistema-escolar"]')).toHaveCount(0)
     await page.goto('/es/proyectos?tipo=<script>')
-    await expect(page.locator('[data-proyecto]')).toHaveCount(2)
+    await expect(page.locator('[data-proyecto]')).toHaveCount(3)
   })
 
   test('toda la tarjeta lleva al caso y el enlace de demo abre aparte', async ({ page }) => {
@@ -47,8 +48,8 @@ test.describe('proyectos, casos y catálogo', () => {
     await page.goto('/es/servicios')
     await expect(page.locator('[data-grupo="datos"] [data-servicio]')).toHaveCount(3)
     await expect(page.locator('[data-grupo="sistemas"] [data-servicio]')).toHaveCount(2)
-    await expect(page.getByText('PRÓXIMAMENTE')).toHaveCount(2)
-    await expect(page.locator('[data-grupo="sistemas"]').getByRole('link', { name: /Probar demo/ })).toHaveCount(1)
+    await expect(page.getByText('PRÓXIMAMENTE')).toHaveCount(1)
+    await expect(page.locator('[data-grupo="sistemas"]').getByRole('link', { name: /Probar demo/ })).toHaveCount(2)
   })
 
   test('el caso trae vista previa para compartir (og:image)', async ({ request }) => {
