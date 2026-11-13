@@ -5,11 +5,6 @@ name: Cargar contenido inicial
 # Si la base ya tiene proyectos, no cambia nada (no borra ni duplica).
 on:
   workflow_dispatch:
-    inputs:
-      confirmar:
-        description: 'Escribe CARGAR para confirmar'
-        required: true
-        default: ''
 
 permissions:
   contents: read
@@ -20,7 +15,6 @@ concurrency:
 
 jobs:
   cargar:
-    if: github.event.inputs.confirmar == 'CARGAR'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:

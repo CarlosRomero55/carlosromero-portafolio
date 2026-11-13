@@ -81,10 +81,9 @@ Cada vez que la ejecutes te da una clave nueva de 64 caracteres (números y letr
    - Name: `DATABASE_URL`
    - Secret: la misma cadena de Neon que pusiste en Vercel.
    - **Add secret**.
-2. Ve a la pestaña **Actions** del repositorio → en la izquierda, **Cargar contenido inicial** → **Run workflow**.
-3. En el cuadro escribe `CARGAR` (en mayúsculas) y pulsa **Run workflow**.
-4. Espera el círculo verde (unos 2–3 minutos).
-5. Entra al panel → **Contenido → Perfil** y pulsa **Guardar** sin cambiar nada. Así el sitio muestra el contenido de inmediato (si no, puede tardar hasta una hora).
+2. Ve a la pestaña **Actions** del repositorio → en la izquierda, **Cargar contenido inicial** → **Run workflow** → botón verde **Run workflow**.
+3. Espera el círculo verde (unos 2–3 minutos).
+4. Entra al panel → **Contenido → Perfil** y pulsa **Guardar** sin cambiar nada. Así el sitio muestra el contenido de inmediato (si no, puede tardar hasta una hora).
 
 Si la base ya tiene proyectos, el proceso no cambia nada: no borra ni duplica.
 
