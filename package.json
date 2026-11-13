@@ -13,7 +13,7 @@
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate",
-    "migrate:create": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:create",
+    "migrate:create": "cross-env NODE_OPTIONS=--no-deprecation BLOB_READ_WRITE_TOKEN=vercel_blob_rw_SoloEsquema_000000000000000000000000000000 payload migrate:create",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed.ts",
     "data:synthetic": "tsx scripts/generate-synthetic.ts",
     "typecheck": "tsc --noEmit",

@@ -27,6 +27,7 @@ pnpm dev                    # http://localhost:3000
 ```
 
 Si cambias colecciones o campos: `pnpm migrate:create nombre` y luego `pnpm migrate`.
+(`migrate:create` activa a propósito el almacén Blob con un token ficticio, para que el esquema incluya sus columnas igual que en producción.)
 
 ## Pruebas
 
