@@ -1,0 +1,53 @@
+name: Cargar contenido inicial
+
+# Se ejecuta SOLO a mano: GitHub → Actions → "Cargar contenido inicial" → Run workflow.
+# Carga el contenido confirmado (español publicado, inglés en borrador) en la base de Neon.
+# Si la base ya tiene proyectos, no cambia nada (no borra ni duplica).
+on:
+  workflow_dispatch:
+    inputs:
+      confirmar:
+        description: 'Escribe CARGAR para confirmar'
+        required: true
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cargar-contenido
+  cancel-in-progress: false
+
+jobs:
+  cargar:
+    if: github.event.inputs.confirmar == 'CARGAR'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # Único secreto necesario. Se guarda en Settings → Secrets and variables → Actions.
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      TOTP_DISABLED: 'false'
+    steps:
+      - name: Comprobar que existe el secreto DATABASE_URL
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "::error::Falta el secreto DATABASE_URL en Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+      - name: Clave temporal para esta corrida (no se guarda)
+        run: |
+          echo "PAYLOAD_SECRET=$(openssl rand -hex 32)" >> "$GITHUB_ENV"
+          echo "RATE_LIMIT_SECRET=$(openssl rand -hex 32)" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - name: Aplicar migraciones (si falta alguna)
+        run: pnpm migrate
+      - name: Cargar contenido
+        run: pnpm seed
+      - name: Siguiente paso
+        run: |
+          echo "### Contenido cargado" >> "$GITHUB_STEP_SUMMARY"
+          echo "Entra al panel → Contenido → **Perfil** y pulsa **Guardar** (sin cambiar nada) para que el sitio muestre el contenido de inmediato." >> "$GITHUB_STEP_SUMMARY"

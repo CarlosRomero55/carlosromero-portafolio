@@ -75,13 +75,18 @@ Cada vez que la ejecutes te da una clave nueva de 64 caracteres (números y letr
 5. **Storage → Create → Blob** → conéctalo al proyecto. Vercel agrega solo **`BLOB_READ_WRITE_TOKEN`**.
 6. **Deploy**. Si cambias una variable después, ve a **Deployments → ⋯ → Redeploy**.
 
-## 6. Cargar el contenido inicial (una vez)
+## 6. Cargar el contenido inicial (una vez, desde GitHub)
 
-En tu computadora, dentro de la carpeta del proyecto:
+1. En GitHub, abre tu repositorio → **Settings → Secrets and variables → Actions → New repository secret**.
+   - Name: `DATABASE_URL`
+   - Secret: la misma cadena de Neon que pusiste en Vercel.
+   - **Add secret**.
+2. Ve a la pestaña **Actions** del repositorio → en la izquierda, **Cargar contenido inicial** → **Run workflow**.
+3. En el cuadro escribe `CARGAR` (en mayúsculas) y pulsa **Run workflow**.
+4. Espera el círculo verde (unos 2–3 minutos).
+5. Entra al panel → **Contenido → Perfil** y pulsa **Guardar** sin cambiar nada. Así el sitio muestra el contenido de inmediato (si no, puede tardar hasta una hora).
 
-1. Crea un archivo `.env` (está ignorado por git) con **solo** `DATABASE_URL` (la de Neon), `PAYLOAD_SECRET` y `RATE_LIMIT_SECRET`.
-2. Ejecuta `pnpm install` y luego `pnpm seed`.
-3. Borra el `.env` si no vas a trabajar en local.
+Si la base ya tiene proyectos, el proceso no cambia nada: no borra ni duplica.
 
 ## 7. Tu usuario del panel + TOTP
 
