@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { ComoTrabajo, LlamadoContacto } from '@/components/Bloques'
 import { Pagina } from '@/components/Pagina'
-import { TarjetasServicios } from '@/components/Servicios'
+import { TarjetaServicio } from '@/components/TarjetaServicio'
 import type { Locale } from '@/i18n/routing'
 import { getServicios } from '@/lib/data/public'
 import { metadatos } from '@/lib/metadatos'
@@ -24,30 +25,50 @@ export async function generateMetadata({ params }: P): Promise<Metadata> {
 export default async function Servicios({ params }: P) {
   const { locale } = await params
   setRequestLocale(locale)
-  const [t, tn, servicios] = await Promise.all([
-    getTranslations({ locale, namespace: 'servicios' }),
-    getTranslations({ locale, namespace: 'inicio' }),
-    getServicios(locale),
-  ])
+  const [t, servicios] = await Promise.all([getTranslations({ locale, namespace: 'servicios' }), getServicios(locale)])
+  const grupos = [
+    { clave: 'datos' as const, titulo: t('grupoDatos'), texto: t('grupoDatosTexto') },
+    { clave: 'sistemas' as const, titulo: t('grupoSistemas'), texto: t('grupoSistemasTexto') },
+  ]
+    .map((g) => ({ ...g, servicios: servicios.filter((s) => s.grupo === g.clave) }))
+    .filter((g) => g.servicios.length > 0)
+
   return (
     <Pagina locale={locale} actual="/services" alternas={alternasDe('/services')}>
       <header className="contenedor cabecera-pagina" data-section="cabecera">
-        <h1>{t('titulo')}</h1>
+        <p className="sobretitulo">{t('eyebrow')}</p>
+        <h1>
+          {t('tituloA')} <span className="grad">{t('tituloB')}</span>
+        </h1>
         <p className="lead">{t('intro')}</p>
       </header>
-      <section className="seccion" data-section="servicios">
-        <div className="contenedor">
-          {servicios.length === 0 ? <p className="vacio">{t('vacio')}</p> : <TarjetasServicios servicios={servicios} />}
-        </div>
-      </section>
-      <section className="seccion" data-section="cta">
-        <div className="contenedor" style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-4)', alignItems: 'center', justifyContent: 'space-between' }}>
-          <h2 style={{ fontSize: 'var(--fs-h2)' }}>{t('cta')}</h2>
-          <a className="boton boton--primario" href={ruta(locale, '/contact')}>
-            {tn('contactar')}
-          </a>
-        </div>
-      </section>
+
+      <div className="contenedor" data-section="catalogo">
+        {grupos.length === 0 ? (
+          <p className="vacio">{t('vacio')}</p>
+        ) : (
+          grupos.map((g) => (
+            <section className="grupo" key={g.clave} aria-labelledby={`g-${g.clave}`} data-grupo={g.clave}>
+              <div className="grupo__cabeza">
+                <h2 id={`g-${g.clave}`}>{g.titulo}</h2>
+                <p>{g.texto}</p>
+              </div>
+              <ul className="catalogo">
+                {g.servicios.map((s) => (
+                  <li key={s.id}>
+                    <TarjetaServicio locale={locale} s={s} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))
+        )}
+      </div>
+
+      <div style={{ marginTop: 'var(--space-6)' }}>
+        <ComoTrabajo locale={locale} />
+      </div>
+      <LlamadoContacto locale={locale} titulo={t('ctaTitulo')} texto={t('ctaTexto')} />
     </Pagina>
   )
 }

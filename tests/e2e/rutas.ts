@@ -7,4 +7,9 @@ export const PAGINAS = [
   ['/es/privacidad', '/en/privacy'],
 ] as const
 
-export const TODAS = [...PAGINAS.flat(), '/es/proyectos/shrimp-intelligence-ecuador']
+export const TODAS = [
+  ...PAGINAS.flat(),
+  '/es/proyectos/shrimp-intelligence-ecuador',
+  '/es/proyectos/sistema-escolar',
+  '/es/proyectos?tipo=web',
+]

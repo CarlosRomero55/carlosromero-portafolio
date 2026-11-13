@@ -1,8 +1,9 @@
-name: Cargar contenido inicial
+name: Cargar o actualizar contenido
 
-# Se ejecuta SOLO a mano: GitHub → Actions → "Cargar contenido inicial" → Run workflow.
-# Carga el contenido confirmado (español publicado, inglés en borrador) en la base de Neon.
-# Si la base ya tiene proyectos, no cambia nada (no borra ni duplica).
+# Se ejecuta SOLO a mano: GitHub → Actions → "Cargar o actualizar contenido" → Run workflow.
+# 1) Si la base está vacía, carga el contenido inicial.
+# 2) Aplica las actualizaciones de contenido (v2) sin pisar lo editado en el panel.
+# Nunca borra registros. Se puede ejecutar las veces que quieras.
 on:
   workflow_dispatch:
 
@@ -39,9 +40,11 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Aplicar migraciones (si falta alguna)
         run: pnpm migrate
-      - name: Cargar contenido
+      - name: Contenido inicial (solo si la base está vacía)
         run: pnpm seed
+      - name: Actualizaciones de contenido (v2)
+        run: pnpm contenido
       - name: Siguiente paso
         run: |
-          echo "### Contenido cargado" >> "$GITHUB_STEP_SUMMARY"
+          echo "### Contenido listo" >> "$GITHUB_STEP_SUMMARY"
           echo "Entra al panel → Contenido → **Perfil** y pulsa **Guardar** (sin cambiar nada) para que el sitio muestre el contenido de inmediato." >> "$GITHUB_STEP_SUMMARY"

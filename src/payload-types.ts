@@ -162,7 +162,46 @@ export interface Proyecto {
    * Solo minúsculas, números y guiones. Ej.: exportaciones-de-camaron
    */
   slug?: string | null;
-  area: 'analisis' | 'ingenieria' | 'ambos';
+  area: 'analisis' | 'ingenieria' | 'ambos' | 'web';
+  destacado?: boolean | null;
+  /**
+   * Ej.: "China compra la mitad del camarón ecuatoriano, y es el mercado que menos paga por libra."
+   */
+  titular?: string | null;
+  portada?: (number | null) | Media;
+  /**
+   * Solo si no subes una imagen. Ej.: /proyectos/shrimp/01_resumen.webp
+   */
+  portadaRuta?: string | null;
+  portadaAlt?: string | null;
+  /**
+   * Ej.: Power BI · 5 páginas
+   */
+  portadaEtiqueta?: string | null;
+  destacados?:
+    | {
+        /**
+         * Ej.: 42–52 %
+         */
+        cifra: string;
+        texto: string;
+        id?: string | null;
+      }[]
+    | null;
+  hallazgos?:
+    | {
+        cifra: string;
+        texto: string;
+        tono?: ('normal' | 'destacado' | 'riesgo') | null;
+        id?: string | null;
+      }[]
+    | null;
+  ficha?: {
+    tipo?: string | null;
+    periodo?: string | null;
+    fuentesDatos?: string | null;
+    calidad?: string | null;
+  };
   /**
    * Ej.: MySQL, Python, Power BI
    */
@@ -244,6 +283,34 @@ export interface Proyecto {
     };
     [k: string]: unknown;
   } | null;
+  pasos?:
+    | {
+        /**
+         * Ej.: BRONZE
+         */
+        etiqueta: string;
+        titulo: string;
+        texto?: string | null;
+        color?: ('ninguno' | 'bronze' | 'silver' | 'gold') | null;
+        id?: string | null;
+      }[]
+    | null;
+  decisiones?:
+    | {
+        titulo: string;
+        texto: string;
+        id?: string | null;
+      }[]
+    | null;
+  simulador?: ('ninguno' | 'china-2024') | null;
+  demo?: string | null;
+  enlaces?:
+    | {
+        texto: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
   /**
    * Cada gráfico usa un archivo de data/synthetic/ y siempre se marca como SIMULADO.
    */
@@ -256,7 +323,14 @@ export interface Proyecto {
     | null;
   capturas?:
     | {
-        imagen: number | Media;
+        imagen?: (number | null) | Media;
+        ruta?: string | null;
+        alt?: string | null;
+        /**
+         * Ej.: Mercados
+         */
+        titulo?: string | null;
+        leyenda?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -429,6 +503,21 @@ export interface Servicio {
    * Ej.: Power BI, Python
    */
   herramientas?: string[] | null;
+  grupo: 'datos' | 'sistemas';
+  icono?: ('grafico' | 'base' | 'rayo' | 'pantalla' | 'caja') | null;
+  /**
+   * Ej.: Me entero de cómo va el negocio a fin de mes.
+   */
+  dolor?: string | null;
+  entregables?:
+    | {
+        texto: string;
+        id?: string | null;
+      }[]
+    | null;
+  estado?: ('disponible' | 'proximamente') | null;
+  proyectoEjemplo?: (number | null) | Proyecto;
+  demoUrl?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -649,6 +738,35 @@ export interface ProyectosSelect<T extends boolean = true> {
   titulo?: T;
   slug?: T;
   area?: T;
+  destacado?: T;
+  titular?: T;
+  portada?: T;
+  portadaRuta?: T;
+  portadaAlt?: T;
+  portadaEtiqueta?: T;
+  destacados?:
+    | T
+    | {
+        cifra?: T;
+        texto?: T;
+        id?: T;
+      };
+  hallazgos?:
+    | T
+    | {
+        cifra?: T;
+        texto?: T;
+        tono?: T;
+        id?: T;
+      };
+  ficha?:
+    | T
+    | {
+        tipo?: T;
+        periodo?: T;
+        fuentesDatos?: T;
+        calidad?: T;
+      };
   tecnologias?: T;
   resumen?: T;
   preguntaNegocio?: T;
@@ -657,6 +775,31 @@ export interface ProyectosSelect<T extends boolean = true> {
   metodo?: T;
   resultado?: T;
   aprendizajes?: T;
+  pasos?:
+    | T
+    | {
+        etiqueta?: T;
+        titulo?: T;
+        texto?: T;
+        color?: T;
+        id?: T;
+      };
+  decisiones?:
+    | T
+    | {
+        titulo?: T;
+        texto?: T;
+        id?: T;
+      };
+  simulador?: T;
+  demo?: T;
+  enlaces?:
+    | T
+    | {
+        texto?: T;
+        url?: T;
+        id?: T;
+      };
   graficos?:
     | T
     | {
@@ -668,6 +811,10 @@ export interface ProyectosSelect<T extends boolean = true> {
     | T
     | {
         imagen?: T;
+        ruta?: T;
+        alt?: T;
+        titulo?: T;
+        leyenda?: T;
         id?: T;
       };
   contieneDatosSimulados?: T;
@@ -749,6 +896,18 @@ export interface ServiciosSelect<T extends boolean = true> {
   nombre?: T;
   descripcion?: T;
   herramientas?: T;
+  grupo?: T;
+  icono?: T;
+  dolor?: T;
+  entregables?:
+    | T
+    | {
+        texto?: T;
+        id?: T;
+      };
+  estado?: T;
+  proyectoEjemplo?: T;
+  demoUrl?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -25,17 +25,17 @@ export default function GraficoLinea({
     <div className="grafico" aria-hidden="true">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart accessibilityLayer={false} data={puntos} margin={{ top: 8, right: 12, bottom: 0, left: -8 }}>
-          <CartesianGrid stroke="#e6e1d3" vertical={false} />
+          <CartesianGrid stroke="#30363d" vertical={false} />
           <XAxis
             dataKey="mes"
             tickFormatter={fmtMes}
-            tick={{ fill: '#5f5a4b', fontSize: 12 }}
-            axisLine={{ stroke: '#e6e1d3' }}
+            tick={{ fill: '#8b949e', fontSize: 12 }}
+            axisLine={{ stroke: '#30363d' }}
             tickLine={false}
             minTickGap={24}
           />
           <YAxis
-            tick={{ fill: '#5f5a4b', fontSize: 12 }}
+            tick={{ fill: '#8b949e', fontSize: 12 }}
             axisLine={false}
             tickLine={false}
             domain={['dataMin - 5', 'dataMax + 5']}
@@ -43,23 +43,24 @@ export default function GraficoLinea({
             width={48}
           />
           <Tooltip
-            cursor={{ stroke: '#8a846f', strokeWidth: 1 }}
+            cursor={{ stroke: '#6e7681', strokeWidth: 1 }}
             formatter={(v) => [fmtNum(Number(v)), etiquetaValor]}
             labelFormatter={(l) => fmtMes(String(l))}
             contentStyle={{
               borderRadius: 8,
-              border: '1px solid #e6e1d3',
-              color: '#1f1d18',
+              border: '1px solid #30363d',
+              background: '#161b22',
+              color: '#e6edf3',
               fontSize: 13,
             }}
           />
           <Line
             type="monotone"
             dataKey="valor"
-            stroke="#2f6f73"
+            stroke="#22d3ee"
             strokeWidth={2}
             dot={false}
-            activeDot={{ r: 5, stroke: '#ffffff', strokeWidth: 2, fill: '#2f6f73' }}
+            activeDot={{ r: 5, stroke: '#0d1117', strokeWidth: 2, fill: '#22d3ee' }}
             isAnimationActive={false}
           />
         </LineChart>

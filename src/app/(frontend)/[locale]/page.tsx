@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { ListaProyectos } from '@/components/ListaProyectos'
+import { ComoTrabajo, LlamadoContacto } from '@/components/Bloques'
 import { Pagina } from '@/components/Pagina'
-import { TarjetasServicios } from '@/components/Servicios'
+import { TarjetaProyecto } from '@/components/TarjetaProyecto'
+import { TarjetaServicio } from '@/components/TarjetaServicio'
 import type { Locale } from '@/i18n/routing'
 import { getPerfil, getProyectos, getServicios } from '@/lib/data/public'
 import { metadatos } from '@/lib/metadatos'
@@ -28,13 +29,17 @@ export async function generateMetadata({ params }: P): Promise<Metadata> {
 export default async function Inicio({ params }: P) {
   const { locale } = await params
   setRequestLocale(locale)
-  const [t, perfil, proyectos, servicios] = await Promise.all([
+  const [t, tp, perfil, proyectos, servicios] = await Promise.all([
     getTranslations({ locale, namespace: 'inicio' }),
+    getTranslations({ locale, namespace: 'proyectos' }),
     getPerfil(locale),
     getProyectos(locale),
     getServicios(locale),
   ])
   const [nombre, ...apellidos] = perfil.nombrePublico.split(' ')
+  const destacados = [...proyectos].sort((a, b) => Number(b.destacado) - Number(a.destacado)).slice(0, 4)
+  const herramientas = [...new Set(proyectos.flatMap((p) => p.tecnologias).concat(servicios.flatMap((s) => s.herramientas)))].slice(0, 9)
+  const serviciosInicio = servicios.filter((s) => s.estado === 'disponible').slice(0, 3)
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -49,14 +54,13 @@ export default async function Inicio({ params }: P) {
     <Pagina locale={locale} actual="/" alternas={alternasDe('/')}>
       <script
         type="application/ld+json"
-        // JSON.stringify + reemplazo de "<" impide cerrar la etiqueta desde el contenido.
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
       />
       <section className="contenedor hero" data-section="hero">
         <div>
           {perfil.disponible && <p className="punto-disponible">{t('disponible')}</p>}
           <h1 className="hero__nombre">
-            {nombre} <em>{apellidos.join(' ')}</em>
+            {nombre} <em className="grad">{apellidos.join(' ')}</em>
           </h1>
           {perfil.titular && <p className="hero__titular">{perfil.titular}</p>}
           {perfil.presentacion && <p className="hero__presentacion">{perfil.presentacion}</p>}
@@ -78,8 +82,8 @@ export default async function Inicio({ params }: P) {
             <img
               src={perfil.foto.url}
               alt={perfil.foto.alt}
-              width={perfil.foto.ancho ?? 600}
-              height={perfil.foto.alto ?? 750}
+              width={perfil.foto.ancho ?? 800}
+              height={perfil.foto.alto ?? 1000}
               fetchPriority="high"
             />
           ) : (
@@ -91,28 +95,69 @@ export default async function Inicio({ params }: P) {
         </div>
       </section>
 
-      {servicios.length > 0 && (
-        <section className="seccion" data-section="servicios">
-          <div className="contenedor">
-            <div className="seccion__cabeza">
-              <h2>{t('queHago')}</h2>
-              <a className="enlace-flecha" href={ruta(locale, '/services')}>
-                {t('verServicios')} <span aria-hidden="true">→</span>
-              </a>
-            </div>
-            <TarjetasServicios servicios={servicios} />
-          </div>
-        </section>
+      {herramientas.length > 0 && (
+        <div className="contenedor" data-section="herramientas">
+          <ul className="herramientas" aria-label={t('herramientas')}>
+            <li className="herramientas__titulo" aria-hidden="true">
+              {t('herramientas')}:
+            </li>
+            {herramientas.map((h) => (
+              <li key={h}>{h}</li>
+            ))}
+          </ul>
+        </div>
       )}
 
       <section className="seccion" data-section="proyectos">
         <div className="contenedor">
           <div className="seccion__cabeza">
-            <h2>{t('destacados')}</h2>
+            <div>
+              <p className="sobretitulo">{t('proyectosEyebrow')}</p>
+              <h2>{t('destacados')}</h2>
+            </div>
+            <a className="enlace-flecha" href={ruta(locale, '/projects')}>
+              {t('todosProyectos')} <span aria-hidden="true">→</span>
+            </a>
           </div>
-          <ListaProyectos locale={locale} proyectos={proyectos.slice(0, 3)} />
+          {destacados.length === 0 ? (
+            <p className="vacio">{tp('vacio')}</p>
+          ) : (
+            <ul className={`proyectos-rejilla${destacados.length === 1 ? ' proyectos-rejilla--uno' : ''}`}>
+              {destacados.map((p) => (
+                <li key={p.id}>
+                  <TarjetaProyecto locale={locale} p={p} />
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </section>
+
+      {serviciosInicio.length > 0 && (
+        <section className="seccion" data-section="servicios">
+          <div className="contenedor">
+            <div className="seccion__cabeza">
+              <div>
+                <p className="sobretitulo">{t('queHagoEyebrow')}</p>
+                <h2>{t('queHago')}</h2>
+              </div>
+              <a className="enlace-flecha" href={ruta(locale, '/services')}>
+                {t('verCatalogo')} <span aria-hidden="true">→</span>
+              </a>
+            </div>
+            <ul className="catalogo catalogo--tres">
+              {serviciosInicio.map((s) => (
+                <li key={s.id}>
+                  <TarjetaServicio locale={locale} s={s} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      <ComoTrabajo locale={locale} />
+      <LlamadoContacto locale={locale} titulo={t('ctaTitulo')} texto={t('ctaTexto')} />
     </Pagina>
   )
 }

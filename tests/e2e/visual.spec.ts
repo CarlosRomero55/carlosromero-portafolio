@@ -18,7 +18,8 @@ test.describe('visual y accesibilidad', () => {
       expect(graves.map((v) => `${v.id}: ${v.nodes.map((n) => n.target).join(' | ')}`)).toEqual([])
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
       expect(violacionesCsp.filter((t) => !/challenges\.cloudflare\.com/.test(t))).toEqual([])
-      const imgs = await page.locator('img').evaluateAll((n) => n.filter((i) => !(i as HTMLImageElement).alt).length)
+      // alt="" está permitido (imagen decorativa, p. ej. la portada de una tarjeta); lo que no puede faltar es el atributo.
+      const imgs = await page.locator('img').evaluateAll((n) => n.filter((i) => !i.hasAttribute('alt')).length)
       expect(imgs).toBe(0)
     })
   }

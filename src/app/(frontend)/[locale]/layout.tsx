@@ -1,5 +1,4 @@
-import '@fontsource/cormorant-garamond/500.css'
-import '@fontsource/cormorant-garamond/500-italic.css'
+import '@fontsource/fira-code/500.css'
 import '@fontsource-variable/inter'
 import '@/styles/global.css'
 import type { Metadata, Viewport } from 'next'
@@ -9,7 +8,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import type { ReactNode } from 'react'
 import { routing, type Locale } from '@/i18n/routing'
 
-export const viewport: Viewport = { themeColor: '#faf8f3', colorScheme: 'light' }
+export const viewport: Viewport = { themeColor: '#0d1117', colorScheme: 'dark' }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params

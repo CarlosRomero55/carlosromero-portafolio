@@ -32,14 +32,23 @@ export type PerfilPublico = {
   seoTitulo: string | null
   seoDescripcion: string | null
 }
+export type Area = 'analisis' | 'ingenieria' | 'ambos' | 'web'
+export type Cifra = { cifra: string; texto: string }
 export type ProyectoTarjeta = {
   id: string
   titulo: string
   slug: string
-  area: 'analisis' | 'ingenieria' | 'ambos'
+  area: Area
   resumen: string
   tecnologias: string[]
+  destacado: boolean
+  portada: ImagenPublica | null
+  portadaEtiqueta: string | null
+  destacados: Cifra[]
+  repositorio: string | null
+  demo: string | null
 }
+export type Captura = ImagenPublica & { titulo: string | null; leyenda: string | null }
 export type ProyectoDetalle = ProyectoTarjeta & {
   preguntaNegocio: string
   problema: RichText
@@ -48,7 +57,14 @@ export type ProyectoDetalle = ProyectoTarjeta & {
   resultado: RichText
   aprendizajes: RichText
   graficos: { archivo: string; titulo: string }[]
-  capturas: ImagenPublica[]
+  capturas: Captura[]
+  titular: string | null
+  hallazgos: (Cifra & { tono: 'normal' | 'destacado' | 'riesgo' })[]
+  ficha: { tipo: string | null; periodo: string | null; fuentesDatos: string | null; calidad: string | null }
+  pasos: { etiqueta: string; titulo: string; texto: string | null; color: 'ninguno' | 'bronze' | 'silver' | 'gold' }[]
+  decisiones: { titulo: string; texto: string }[]
+  simulador: 'ninguno' | 'china-2024'
+  enlaces: { texto: string; url: string }[]
   contieneDatosSimulados: boolean
   fuentes: { nombre: string; url: string; fechaConsulta: string }[]
   repositorio: string | null
@@ -81,7 +97,19 @@ export type CertificacionPublica = {
   anio: string | null
   estado: 'obtenida' | 'en_preparacion'
 }
-export type ServicioPublico = { id: string; nombre: string; descripcion: string; herramientas: string[] }
+export type ServicioPublico = {
+  id: string
+  nombre: string
+  descripcion: string
+  herramientas: string[]
+  grupo: 'datos' | 'sistemas'
+  icono: 'grafico' | 'base' | 'rayo' | 'pantalla' | 'caja'
+  dolor: string | null
+  entregables: string[]
+  estado: 'disponible' | 'proximamente'
+  ejemplo: { titulo: string; slug: string } | null
+  demoUrl: string | null
+}
 export type IdiomaPublico = { id: string; idioma: string; nivel: string }
 
 const str = (v: unknown): string => (typeof v === 'string' ? v : '')
@@ -90,6 +118,17 @@ const rich = (v: unknown): RichText =>
   v && typeof v === 'object' && 'root' in (v as Rec) ? { root: (v as { root: Rec }).root } : null
 const lista = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : [])
 const id = (v: unknown): string => String(v)
+const filas = (v: unknown): Rec[] => (Array.isArray(v) ? (v as Rec[]) : [])
+const https = (v: unknown): string | null => (typeof v === 'string' && /^https:\/\/[^\s]+$/.test(v) ? v : null)
+const RUTA_ESTATICA = /^\/proyectos\/[a-z0-9-]+\/[a-z0-9_-]+\.(webp|png|jpg)$/
+
+/** Imagen subida (Media) o, si no hay, ruta estática del sitio validada. */
+function imagenORuta(subida: unknown, ruta: unknown, alt: unknown, locale: Locale): ImagenPublica | null {
+  const m = imagen(subida, locale)
+  if (m) return m
+  if (typeof ruta === 'string' && RUTA_ESTATICA.test(ruta)) return { url: ruta, alt: str(alt), ancho: null, alto: null }
+  return null
+}
 
 function imagen(v: unknown, locale: Locale): ImagenPublica | null {
   if (!v || typeof v !== 'object') return null
@@ -161,8 +200,8 @@ export const getTextos = cacheado('textos', async (locale: Locale) => {
   return { avisoPrivacidad: rich(d.avisoPrivacidad), pie: strN(d.pie), actualizado: str(d.updatedAt) }
 })
 
-function tarjeta(d: Rec): ProyectoTarjeta {
-  const area = d.area === 'analisis' || d.area === 'ingenieria' ? d.area : 'ambos'
+function tarjeta(d: Rec, locale: Locale): ProyectoTarjeta {
+  const area: Area = d.area === 'analisis' || d.area === 'ingenieria' || d.area === 'web' ? d.area : 'ambos'
   return {
     id: id(d.id),
     titulo: str(d.titulo),
@@ -170,11 +209,19 @@ function tarjeta(d: Rec): ProyectoTarjeta {
     area,
     resumen: str(d.resumen),
     tecnologias: lista(d.tecnologias),
+    destacado: d.destacado === true,
+    portada: imagenORuta(d.portada, d.portadaRuta, d.portadaAlt, locale),
+    portadaEtiqueta: strN(d.portadaEtiqueta),
+    destacados: filas(d.destacados)
+      .map((f) => ({ cifra: str(f.cifra), texto: str(f.texto) }))
+      .filter((f) => f.cifra && f.texto),
+    repositorio: strN(d.repositorio),
+    demo: https(d.demo),
   }
 }
 
 export const getProyectos = cacheado('proyectos', async (locale: Locale): Promise<ProyectoTarjeta[]> => {
-  return (await buscar('proyectos', locale)).map(tarjeta)
+  return (await buscar('proyectos', locale, publicado, 1)).map((d) => tarjeta(d, locale))
 })
 
 export const getProyecto = cacheado(
@@ -185,7 +232,7 @@ export const getProyecto = cacheado(
     if (!d) return null
     const seo = (d.seo ?? {}) as Rec
     return {
-      ...tarjeta(d),
+      ...tarjeta(d, locale),
       preguntaNegocio: str(d.preguntaNegocio),
       problema: rich(d.problema),
       datosLimpieza: rich(d.datosLimpieza),
@@ -196,9 +243,43 @@ export const getProyecto = cacheado(
         archivo: str(g.archivo),
         titulo: str(g.titulo),
       })),
-      capturas: (Array.isArray(d.capturas) ? (d.capturas as Rec[]) : [])
-        .map((c) => imagen(c.imagen, locale))
-        .filter((x): x is ImagenPublica => x !== null),
+      capturas: filas(d.capturas)
+        .map((c) => {
+          const img = imagenORuta(c.imagen, c.ruta, c.alt, locale)
+          return img ? { ...img, titulo: strN(c.titulo), leyenda: strN(c.leyenda) } : null
+        })
+        .filter((x): x is Captura => x !== null),
+      titular: strN(d.titular),
+      hallazgos: filas(d.hallazgos)
+        .map((f) => ({
+          cifra: str(f.cifra),
+          texto: str(f.texto),
+          tono: (f.tono === 'destacado' || f.tono === 'riesgo' ? f.tono : 'normal') as 'normal' | 'destacado' | 'riesgo',
+        }))
+        .filter((f) => f.cifra && f.texto),
+      ficha: (() => {
+        const f = (d.ficha ?? {}) as Rec
+        return { tipo: strN(f.tipo), periodo: strN(f.periodo), fuentesDatos: strN(f.fuentesDatos), calidad: strN(f.calidad) }
+      })(),
+      pasos: filas(d.pasos)
+        .map((f) => ({
+          etiqueta: str(f.etiqueta),
+          titulo: str(f.titulo),
+          texto: strN(f.texto),
+          color: (['bronze', 'silver', 'gold'].includes(str(f.color)) ? f.color : 'ninguno') as
+            | 'ninguno'
+            | 'bronze'
+            | 'silver'
+            | 'gold',
+        }))
+        .filter((f) => f.etiqueta && f.titulo),
+      decisiones: filas(d.decisiones)
+        .map((f) => ({ titulo: str(f.titulo), texto: str(f.texto) }))
+        .filter((f) => f.titulo && f.texto),
+      simulador: d.simulador === 'china-2024' ? 'china-2024' : 'ninguno',
+      enlaces: filas(d.enlaces)
+        .map((f) => ({ texto: str(f.texto), url: https(f.url) ?? '' }))
+        .filter((f) => f.texto && f.url),
       contieneDatosSimulados: d.contieneDatosSimulados === true,
       fuentes: (Array.isArray(d.fuentes) ? (d.fuentes as Rec[]) : [])
         .map((f) => ({ nombre: str(f.nombre), url: str(f.url), fechaConsulta: str(f.fechaConsulta) }))
@@ -263,12 +344,24 @@ export const getCertificaciones = cacheado('certificaciones', async (locale: Loc
 )
 
 export const getServicios = cacheado('servicios', async (locale: Locale): Promise<ServicioPublico[]> =>
-  (await buscar('servicios', locale)).map((d) => ({
-    id: id(d.id),
-    nombre: str(d.nombre),
-    descripcion: str(d.descripcion),
-    herramientas: lista(d.herramientas),
-  })),
+  (await buscar('servicios', locale, publicado, 1)).map((d) => {
+    const ej = d.proyectoEjemplo && typeof d.proyectoEjemplo === 'object' ? (d.proyectoEjemplo as Rec) : null
+    const iconos = ['grafico', 'base', 'rayo', 'pantalla', 'caja'] as const
+    return {
+      id: id(d.id),
+      nombre: str(d.nombre),
+      descripcion: str(d.descripcion),
+      herramientas: lista(d.herramientas),
+      grupo: d.grupo === 'sistemas' ? 'sistemas' : 'datos',
+      icono: (iconos as readonly string[]).includes(str(d.icono)) ? (d.icono as ServicioPublico['icono']) : 'grafico',
+      dolor: strN(d.dolor),
+      entregables: filas(d.entregables).map((f) => str(f.texto)).filter(Boolean),
+      estado: d.estado === 'proximamente' ? 'proximamente' : 'disponible',
+      // Solo se enlaza un proyecto que esté publicado en este idioma.
+      ejemplo: ej && ej.publicado === true && str(ej.slug) ? { titulo: str(ej.titulo), slug: str(ej.slug) } : null,
+      demoUrl: https(d.demoUrl),
+    }
+  }),
 )
 
 export const getIdiomas = cacheado('idiomas', async (locale: Locale): Promise<IdiomaPublico[]> =>

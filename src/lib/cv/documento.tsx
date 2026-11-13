@@ -8,7 +8,7 @@ import type {
   ProyectoTarjeta,
 } from '../data/public'
 
-const C = { fg: '#1F1D18', muted: '#5F5A4B', brand: '#6E5F33', line: '#E6E1D3' }
+const C = { fg: '#0D1117', muted: '#57606A', brand: '#5B21B6', line: '#D0D7DE' }
 
 const s = StyleSheet.create({
   page: { padding: 40, fontFamily: 'Helvetica', fontSize: 10, color: C.fg, lineHeight: 1.45 },

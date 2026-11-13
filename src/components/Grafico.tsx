@@ -14,7 +14,7 @@ export async function Grafico({ archivo, titulo, locale }: { archivo: string; ti
   const t = await getTranslations({ locale, namespace: 'proyectos' })
   const etiquetaValor = locale === 'es' ? 'Índice (simulado)' : 'Index (simulated)'
   return (
-    <figure className="figura" data-simulado="true">
+    <figure className="figura-grafico" data-simulado="true">
       <figcaption>{titulo}</figcaption>
       <p className="aviso-simulado">
         <strong>{t('simulado')}</strong>
