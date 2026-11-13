@@ -58,6 +58,10 @@ jobs:
           PUBLICAR_INGLES: ${{ inputs.publicar_ingles }}
           PUBLICAR_ARTICULO: ${{ inputs.publicar_articulo }}
         run: pnpm contenido:v3
+      - name: Inventario + punto de venta (v4)
+        env:
+          PUBLICAR_INGLES: ${{ inputs.publicar_ingles }}
+        run: pnpm contenido:v4
       - name: Siguiente paso
         run: |
           echo "### Contenido listo" >> "$GITHUB_STEP_SUMMARY"
