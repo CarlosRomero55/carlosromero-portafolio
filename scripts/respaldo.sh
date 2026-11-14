@@ -12,6 +12,9 @@ set -euo pipefail
 : "${DATABASE_URL:?Falta DATABASE_URL}"
 : "${PRUEBA_URL:?Falta PRUEBA_URL (base vacía para comprobar la copia)}"
 : "${BACKUP_PASSPHRASE:?Falta BACKUP_PASSPHRASE}"
+# Sin salto de línea final (gpg solo lee la primera línea de la clave).
+BACKUP_PASSPHRASE="${BACKUP_PASSPHRASE%%$'\n'*}"
+BACKUP_PASSPHRASE="${BACKUP_PASSPHRASE%$'\r'}"
 if [ "${#BACKUP_PASSPHRASE}" -lt 20 ]; then
   echo "La clave del respaldo debe tener al menos 20 caracteres." >&2
   exit 1

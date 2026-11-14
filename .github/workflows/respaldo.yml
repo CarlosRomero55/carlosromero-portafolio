@@ -39,6 +39,10 @@ jobs:
     steps:
       - name: Comprobar los secretos
         run: |
+          # Quita espacios y saltos de línea que se cuelan al pegar el secreto.
+          limpio=$(printf '%s' "$RESPALDO_TOKEN" | tr -d '[:space:]')
+          echo "::add-mask::$limpio"
+          echo "RESPALDO_TOKEN=$limpio" >> "$GITHUB_ENV"
           falta=0
           for s in DATABASE_URL BACKUP_PASSPHRASE RESPALDO_TOKEN; do
             if [ -z "${!s}" ]; then echo "::error::Falta el secreto $s (ver docs/RESPALDO.md)."; falta=1; fi
