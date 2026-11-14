@@ -24,14 +24,14 @@ test.describe('proyectos, casos y catálogo', () => {
 
   test('los filtros de proyectos separan datos y sistemas web', async ({ page }) => {
     await page.goto('/es/proyectos?tipo=web')
-    await expect(page.locator('[data-proyecto]')).toHaveCount(2)
+    await expect(page.locator('[data-proyecto]')).toHaveCount(3)
     await expect(page.locator('[data-proyecto="sistema-escolar"]')).toBeVisible()
     await expect(page.locator('[data-proyecto="inventario-punto-de-venta"]')).toBeVisible()
     await page.goto('/es/proyectos?tipo=datos')
     await expect(page.locator('[data-proyecto="shrimp-intelligence-ecuador"]')).toBeVisible()
     await expect(page.locator('[data-proyecto="sistema-escolar"]')).toHaveCount(0)
     await page.goto('/es/proyectos?tipo=<script>')
-    await expect(page.locator('[data-proyecto]')).toHaveCount(3)
+    await expect(page.locator('[data-proyecto]')).toHaveCount(4)
   })
 
   test('toda la tarjeta lleva al caso y el enlace de demo abre aparte', async ({ page }) => {

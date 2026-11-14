@@ -27,6 +27,7 @@
     "contenido:v3": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/contenido-v3.ts",
     "contenido:v4": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/contenido-v4.ts",
     "contenido:v5": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/contenido-v5.ts",
+    "contenido:v6": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/contenido-v6.ts",
     "imagenes": "tsx scripts/imagenes.ts"
   },
   "dependencies": {

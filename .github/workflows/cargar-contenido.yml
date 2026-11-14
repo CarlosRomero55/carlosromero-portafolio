@@ -66,6 +66,10 @@ jobs:
         env:
           PUBLICAR_INGLES: ${{ inputs.publicar_ingles }}
         run: pnpm contenido:v5
+      - name: Citas, facturación y caja (v6)
+        env:
+          PUBLICAR_INGLES: ${{ inputs.publicar_ingles }}
+        run: pnpm contenido:v6
       - name: Siguiente paso
         run: |
           echo "### Contenido listo" >> "$GITHUB_STEP_SUMMARY"
