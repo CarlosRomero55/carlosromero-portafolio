@@ -55,6 +55,9 @@ jobs:
           fi
 
       - uses: actions/checkout@v4
+        with:
+          # Sin esto, la credencial de este repo público se impone al token del repo de respaldos.
+          persist-credentials: false
 
       - name: Instalar el cliente de PostgreSQL 18
         run: |
@@ -74,10 +77,12 @@ jobs:
 
       - name: Guardar en el repositorio privado
         run: |
-          git clone -q --depth 1 "https://x-access-token:${RESPALDO_TOKEN}@github.com/${RESPALDO_REPO}.git" destino 2>/dev/null || {
-            echo "::error::No se pudo clonar $RESPALDO_REPO."; exit 1; }
+          cd "$RUNNER_TEMP"
+          git clone -q --depth 1 "https://x-access-token:${RESPALDO_TOKEN}@github.com/${RESPALDO_REPO}.git" destino 2>err.txt || {
+            sed 's#https://[^@]*@#https://***@#g' err.txt; echo "::error::No se pudo clonar $RESPALDO_REPO."; exit 1; }
+          rm -f err.txt
           mkdir -p destino/respaldos
-          cp salida/* destino/respaldos/
+          cp "$GITHUB_WORKSPACE"/salida/* destino/respaldos/
           cd destino
           # Conserva solo los últimos $CONSERVAR respaldos.
           ls -1 respaldos/*.dump.gpg | sort | head -n -"$CONSERVAR" | while read -r viejo; do
