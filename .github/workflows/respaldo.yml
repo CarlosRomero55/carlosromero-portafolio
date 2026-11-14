@@ -67,8 +67,9 @@ jobs:
       - name: Copiar, comprobar y cifrar
         id: copia
         run: |
+          echo "::add-mask::${DATABASE_URL/-pooler./.}"
           mkdir -p salida
-          archivo=$(SALIDA_DIR=salida bash scripts/respaldo.sh)
+          archivo=$(SALIDA_DIR=salida bash scripts/respaldo.sh | tail -n 1)
           echo "archivo=$archivo" >> "$GITHUB_OUTPUT"
 
       - name: Guardar en el repositorio privado

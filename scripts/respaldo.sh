@@ -18,7 +18,7 @@ if [ "${#BACKUP_PASSPHRASE}" -lt 20 ]; then
 fi
 
 DIRECTA="${DATABASE_URL/-pooler./.}"
-[ -n "${GITHUB_ACTIONS:-}" ] && echo "::add-mask::$DIRECTA"
+# (En GitHub Actions el workflow oculta esta cadena antes de llamar al script.)
 
 TRABAJO="$(mktemp -d)"
 trap 'rm -rf "$TRABAJO"' EXIT
