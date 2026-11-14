@@ -11,7 +11,7 @@ export async function TarjetaProyecto({ locale, p, encabezado = 'h3' }: { locale
       <div className={`pc__imagen${p.portada ? '' : ' pc__imagen--vacia'}`}>
         {p.portada ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={p.portada.url} alt="" width={p.portada.ancho ?? 1600} height={p.portada.alto ?? 900} loading="lazy" decoding="async" />
+          <img src={p.portada.url} srcSet={p.portada.srcSet} sizes={p.portada.srcSet ? '(max-width: 760px) 100vw, 560px' : undefined} alt="" width={p.portada.ancho ?? 1600} height={p.portada.alto ?? 900} loading="lazy" decoding="async" />
         ) : (
           <span aria-hidden="true">{'{ }'}</span>
         )}

@@ -21,6 +21,8 @@ export function Ventana({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={imagen.url}
+        srcSet={imagen.srcSet}
+        sizes={imagen.srcSet ? '(max-width: 900px) 100vw, 900px' : undefined}
         alt={imagen.alt}
         width={imagen.ancho ?? 1600}
         height={imagen.alto ?? 900}

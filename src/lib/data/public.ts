@@ -17,7 +17,8 @@ import { esLocale, type Locale } from '@/i18n/routing'
 type Rec = Record<string, unknown>
 export type RichText = { root: Rec } | null
 
-export type ImagenPublica = { url: string; alt: string; ancho: number | null; alto: number | null }
+/** srcSet: versiones más pequeñas para pantallas angostas (celular). */
+export type ImagenPublica = { url: string; alt: string; ancho: number | null; alto: number | null; srcSet?: string }
 export type PerfilPublico = {
   nombrePublico: string
   nombreCompleto: string
@@ -141,7 +142,11 @@ const RUTA_ESTATICA = /^\/proyectos\/[a-z0-9-]+\/[a-z0-9_-]+\.(webp|png|jpg)$/
 function imagenORuta(subida: unknown, ruta: unknown, alt: unknown, locale: Locale): ImagenPublica | null {
   const m = imagen(subida, locale)
   if (m) return m
-  if (typeof ruta === 'string' && RUTA_ESTATICA.test(ruta)) return { url: ruta, alt: str(alt), ancho: null, alto: null }
+  if (typeof ruta === 'string' && RUTA_ESTATICA.test(ruta)) {
+    // Cada .webp de public/proyectos tiene su versión `-800.webp` (pnpm imagenes; lo comprueba una prueba unitaria).
+    const srcSet = ruta.endsWith('.webp') ? `${ruta.replace(/\.webp$/, '-800.webp')} 800w, ${ruta} 1600w` : undefined
+    return { url: ruta, alt: str(alt), ancho: null, alto: null, srcSet }
+  }
   return null
 }
 
@@ -155,7 +160,19 @@ function imagen(v: unknown, locale: Locale): ImagenPublica | null {
     alt: typeof m.alt === 'string' ? m.alt : typeof m.alt === 'object' && m.alt ? str((m.alt as Rec)[locale]) : '',
     ancho: typeof m.width === 'number' ? m.width : null,
     alto: typeof m.height === 'number' ? m.height : null,
+    srcSet: srcSetSubida(m),
   }
+}
+
+/** Usa los tamaños que Payload genera al subir (sm 400, md 600, lg 1200) más el original. */
+function srcSetSubida(m: Rec): string | undefined {
+  const tamanos = (m.sizes ?? {}) as Record<string, Rec>
+  const partes = Object.values(tamanos)
+    .filter((t) => t && typeof t.url === 'string' && typeof t.width === 'number')
+    .map((t) => `${t.url} ${t.width}w`)
+  if (partes.length === 0) return undefined
+  if (typeof m.width === 'number') partes.push(`${m.url} ${m.width}w`)
+  return partes.join(', ')
 }
 
 const publicado: Where = { publicado: { equals: true } }
