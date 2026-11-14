@@ -27,6 +27,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       apple: '/apple-icon.png',
     },
     robots: process.env.NEXT_PUBLIC_NOINDEX === 'true' ? { index: false, follow: false } : undefined,
+    // Google Search Console: código del método "Etiqueta HTML" (no es secreto). Variable en Vercel.
+    verification: process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : undefined,
   }
 }
 
