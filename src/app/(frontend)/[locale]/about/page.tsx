@@ -60,7 +60,7 @@ export default async function SobreMi({ params }: P) {
                   {e.periodo && <span className="linea__periodo">{e.periodo}</span>}
                   <h3>{e.cargo}</h3>
                   <p className="linea__org">{e.organizacion}</p>
-                  {e.descripcion && <p>{e.descripcion}</p>}
+                  {e.descripcion && <Descripcion texto={e.descripcion} />}
                   {e.hijas.length > 0 && (
                     <ul className="linea__hijas">
                       {e.hijas.map((h) =>
@@ -155,5 +155,18 @@ export default async function SobreMi({ params }: P) {
         </section>
       )}
     </Pagina>
+  )
+}
+
+/** Una línea = un logro. Si hay varias líneas se muestran como viñetas. */
+function Descripcion({ texto }: { texto: string }) {
+  const lineas = texto.split('\n').map((l) => l.trim()).filter(Boolean)
+  if (lineas.length < 2) return <p>{texto}</p>
+  return (
+    <ul className="linea__logros">
+      {lineas.map((l) => (
+        <li key={l}>{l}</li>
+      ))}
+    </ul>
   )
 }

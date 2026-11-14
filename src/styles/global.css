@@ -1666,3 +1666,15 @@ details.datos-tabla summary {
   color: var(--muted);
   margin: var(--space-2) 0 0;
 }
+
+/* Logros de cada etapa (una línea por logro) */
+.linea__logros {
+  margin: var(--space-2) 0 0;
+  padding-left: 1.1em;
+  display: grid;
+  gap: var(--space-1, 4px);
+  color: var(--fg);
+}
+.linea__logros li::marker {
+  color: var(--cy);
+}

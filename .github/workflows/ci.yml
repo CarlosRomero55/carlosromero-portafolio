@@ -57,7 +57,7 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test:unit
       - name: Migraciones y datos de prueba
-        run: pnpm migrate && pnpm seed && pnpm contenido && PUBLICAR_INGLES=true PUBLICAR_ARTICULO=true pnpm contenido:v3 && PUBLICAR_INGLES=true pnpm contenido:v4
+        run: pnpm migrate && pnpm seed && pnpm contenido && PUBLICAR_INGLES=true PUBLICAR_ARTICULO=true pnpm contenido:v3 && PUBLICAR_INGLES=true pnpm contenido:v4 && PUBLICAR_INGLES=true pnpm contenido:v5
       - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium
       - name: Pruebas e2e, accesibilidad y seguridad

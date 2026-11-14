@@ -12,7 +12,7 @@ const C = { fg: '#0D1117', muted: '#57606A', brand: '#5B21B6', line: '#D0D7DE' }
 
 const s = StyleSheet.create({
   page: { padding: 40, fontFamily: 'Helvetica', fontSize: 10, color: C.fg, lineHeight: 1.45 },
-  nombre: { fontFamily: 'Times-Roman', fontSize: 26, marginBottom: 2 },
+  nombre: { fontFamily: 'Helvetica-Bold', fontSize: 22, lineHeight: 1.2, marginBottom: 4 },
   titular: { fontSize: 11, color: C.brand, marginBottom: 6 },
   contacto: { fontSize: 9, color: C.muted, marginBottom: 14 },
   h2: {
@@ -77,7 +77,13 @@ export function DocumentoCV(d: DatosCV) {
                   {e.periodo ? <Text style={s.muted}>{e.periodo}</Text> : null}
                 </View>
                 <Text style={s.muted}>{e.organizacion}</Text>
-                {e.descripcion ? <Text>{e.descripcion}</Text> : null}
+                {e.descripcion
+                  ? e.descripcion
+                      .split('\n')
+                      .map((l) => l.trim())
+                      .filter(Boolean)
+                      .map((l, i, todas) => <Text key={i}>{todas.length > 1 ? `• ${l}` : l}</Text>)
+                  : null}
                 {e.hijas.map((h) => (
                   <View key={h.id} style={s.hija}>
                     <Text>

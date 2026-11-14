@@ -62,6 +62,10 @@ jobs:
         env:
           PUBLICAR_INGLES: ${{ inputs.publicar_ingles }}
         run: pnpm contenido:v4
+      - name: Experiencia y certificaciones del CV (v5)
+        env:
+          PUBLICAR_INGLES: ${{ inputs.publicar_ingles }}
+        run: pnpm contenido:v5
       - name: Siguiente paso
         run: |
           echo "### Contenido listo" >> "$GITHUB_STEP_SUMMARY"
