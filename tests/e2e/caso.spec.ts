@@ -49,7 +49,7 @@ test.describe('proyectos, casos y catálogo', () => {
     await expect(page.locator('[data-grupo="datos"] [data-servicio]')).toHaveCount(3)
     await expect(page.locator('[data-grupo="sistemas"] [data-servicio]')).toHaveCount(2)
     await expect(page.getByText('PRÓXIMAMENTE')).toHaveCount(1)
-    await expect(page.locator('[data-grupo="sistemas"]').getByRole('link', { name: /Probar demo/ })).toHaveCount(2)
+    await expect(page.locator('[data-grupo="sistemas"]').getByRole('link', { name: /Probar demo/ })).toHaveCount(3)
   })
 
   test('el caso trae vista previa para compartir (og:image)', async ({ request }) => {
