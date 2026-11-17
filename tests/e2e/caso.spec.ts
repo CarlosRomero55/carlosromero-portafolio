@@ -47,7 +47,7 @@ test.describe('proyectos, casos y catálogo', () => {
   test('el catálogo agrupa servicios y marca los que están en preparación', async ({ page }) => {
     await page.goto('/es/servicios')
     await expect(page.locator('[data-grupo="datos"] [data-servicio]')).toHaveCount(3)
-    await expect(page.locator('[data-grupo="sistemas"] [data-servicio]')).toHaveCount(2)
+    await expect(page.locator('[data-grupo="sistemas"] [data-servicio]')).toHaveCount(3)
     await expect(page.getByText('PRÓXIMAMENTE')).toHaveCount(1)
     await expect(page.locator('[data-grupo="sistemas"]').getByRole('link', { name: /Probar demo/ })).toHaveCount(3)
   })
