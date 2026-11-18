@@ -1678,3 +1678,165 @@ details.datos-tabla summary {
 .linea__logros li::marker {
   color: var(--cy);
 }
+
+/* ——— Historia por pasos (Pork to China) ———
+   Escritorio: gráfico fijo a la izquierda que cambia con el paso visible.
+   Celular y movimiento reducido: cada paso trae su propio gráfico. */
+.historia {
+  --pendiente: #fbbf24; /* ámbar "en camino": 10,6:1 sobre #0D1117 */
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+.historia__fija {
+  position: sticky;
+  top: 6rem;
+}
+.historia__lienzo {
+  padding: var(--space-3);
+}
+.historia__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.historia__eje {
+  fill: var(--muted);
+  font-size: 12px;
+}
+.historia__eje--dentro {
+  fill: #0d1117;
+  font-weight: 700;
+}
+.historia__etiqueta {
+  fill: var(--fg-2);
+  font-size: 13px;
+}
+.historia__nota {
+  fill: var(--fg-2);
+  font-size: 12px;
+}
+.historia__nota--riesgo {
+  fill: var(--riesgo);
+}
+.historia__valor {
+  fill: var(--fg);
+  font-size: 15px;
+  font-weight: 700;
+}
+.historia__pasos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.historia__paso {
+  min-height: 70vh;
+  padding-block: var(--space-2);
+  padding-left: var(--space-3);
+  margin-block: var(--space-4);
+  border-left: 3px solid var(--line);
+  transition: border-color 0.3s ease;
+}
+.historia__paso:first-child {
+  margin-top: 0;
+}
+/* El paso activo se marca con el borde (no atenuando el texto: el contraste AA se mantiene) */
+.historia__paso--activo {
+  border-left-color: var(--cy);
+}
+.historia__paso h3 {
+  margin: 0 0 var(--space-2);
+}
+.historia__num {
+  font-family: var(--mono);
+  color: var(--cy);
+  margin: 0 0 var(--space-1);
+}
+.historia__lienzo--movil {
+  display: none;
+}
+.historia__fuente {
+  grid-column: 1 / -1;
+}
+.historia__disparadores {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+.historia__disp {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  gap: 0.7rem;
+  align-items: center;
+  background: var(--s2);
+  border-left: 4px solid var(--riesgo);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.8rem;
+}
+.historia__disp--en-camino {
+  border-left-color: var(--pendiente);
+}
+.historia__disp--cumplido {
+  border-left-color: var(--ok);
+}
+.historia__disp-icono {
+  font-size: 1.2rem;
+  text-align: center;
+  color: var(--riesgo);
+}
+.historia__disp--en-camino .historia__disp-icono,
+.historia__disp--en-camino .historia__disp-estado {
+  color: var(--pendiente);
+}
+.historia__disp--cumplido .historia__disp-icono,
+.historia__disp--cumplido .historia__disp-estado {
+  color: var(--ok);
+}
+.historia__disp-cifras {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.historia__disp-estado {
+  font-size: 0.85rem;
+  color: var(--riesgo);
+  white-space: nowrap;
+}
+@media (max-width: 60rem) {
+  .historia {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .historia__fija {
+    display: none;
+  }
+  .historia__lienzo--movil {
+    display: block;
+    margin-top: var(--space-3);
+  }
+  .historia__paso {
+    min-height: 0;
+    border-left-color: var(--line);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .historia__paso {
+    transition: none;
+  }
+}
+/* En el celular el gráfico se ve a ~60 % de su tamaño: letra más grande en las unidades del SVG */
+@media (max-width: 60rem) {
+  .historia__eje,
+  .historia__nota {
+    font-size: 19px;
+  }
+  .historia__etiqueta {
+    font-size: 20px;
+  }
+  .historia__valor {
+    font-size: 22px;
+  }
+}

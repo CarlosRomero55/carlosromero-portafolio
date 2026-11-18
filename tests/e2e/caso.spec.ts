@@ -22,6 +22,19 @@ test.describe('proyectos, casos y catálogo', () => {
     await expect(page.locator('figcaption', { hasText: 'DATOS SIMULADOS de una finca ficticia' })).toBeVisible()
   })
 
+  test('Pork to China cuenta la historia en seis pasos con datos reales', async ({ page }) => {
+    await page.goto('/es/proyectos/pork-to-china')
+    const historia = page.locator('[data-historia]')
+    await expect(historia.locator('.historia__paso')).toHaveCount(6)
+    await expect(historia).toContainText('−0,16 USD por kilo')
+    await expect(historia).toContainText('Datos reales del proyecto')
+    await expect(page.getByText('DATOS SIMULADOS')).toHaveCount(0)
+    if (test.info().project.name === 'escritorio') {
+      await historia.locator('.historia__paso').nth(4).scrollIntoViewIfNeeded()
+      await expect(historia.locator('.historia__lienzo').first()).toHaveAttribute('data-paso-activo', '4')
+    }
+  })
+
   test('los filtros de proyectos separan datos y sistemas web', async ({ page }) => {
     await page.goto('/es/proyectos?tipo=web')
     await expect(page.locator('[data-proyecto]')).toHaveCount(4)
@@ -31,7 +44,7 @@ test.describe('proyectos, casos y catálogo', () => {
     await expect(page.locator('[data-proyecto="shrimp-intelligence-ecuador"]')).toBeVisible()
     await expect(page.locator('[data-proyecto="sistema-escolar"]')).toHaveCount(0)
     await page.goto('/es/proyectos?tipo=<script>')
-    await expect(page.locator('[data-proyecto]')).toHaveCount(5)
+    await expect(page.locator('[data-proyecto]')).toHaveCount(6)
   })
 
   test('toda la tarjeta lleva al caso y el enlace de demo abre aparte', async ({ page }) => {

@@ -304,7 +304,7 @@ export interface Proyecto {
         id?: string | null;
       }[]
     | null;
-  simulador?: ('ninguno' | 'china-2024') | null;
+  simulador?: ('ninguno' | 'china-2024' | 'cerdo-historia') | null;
   demo?: string | null;
   enlaces?:
     | {
@@ -616,7 +616,6 @@ export interface Mensaje {
 export interface Usuario {
   id: number;
   totpSecret?: string | null;
-  hasTotp?: boolean | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1081,7 +1080,6 @@ export interface MensajesSelect<T extends boolean = true> {
  */
 export interface UsuariosSelect<T extends boolean = true> {
   totpSecret?: T;
-  hasTotp?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

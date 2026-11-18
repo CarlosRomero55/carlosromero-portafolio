@@ -219,5 +219,76 @@
     "publicado": "Publicado el {fecha}",
     "relacionado": "Proyecto relacionado",
     "verCaso": "Ver el caso"
+  },
+  "historiaCerdo": {
+    "pasos": [
+      {
+        "titulo": "La guerra comercial abre una ventana",
+        "texto": "Tras los aranceles de China en 2025, Estados Unidos pasó de {antes} % a {despues} % de las vísceras de cerdo que compra China. Ese espacio lo ocupan otros proveedores.",
+        "descripcion": "Gráfico: participación mensual de EE. UU. en el valor de las vísceras de cerdo que importa China, 2015–2026, con el corte de 2025 resaltado."
+      },
+      {
+        "titulo": "Pero las ventanas se cierran",
+        "texto": "En 2018 EE. UU. perdió {p18} puntos de participación y en 2020 recuperó {p20} cuando China empezó a dar exclusiones. En los últimos meses ya ronda el {ultimos} % del valor.",
+        "descripcion": "Gráfico: la misma serie con los cortes de 2018 y 2020 resaltados (serie de tiempo interrumpida)."
+      },
+      {
+        "titulo": "China compra mucho…",
+        "texto": "China importó {toneladas} millones de toneladas de vísceras de cerdo congeladas en {anio}. Lo que Ecuador podría colocar, según el modelo: entre {min} y {max} toneladas al año, apenas el {pct} %.",
+        "descripcion": "Gráfico: importaciones anuales de vísceras de cerdo de China, 2018–2025, frente a una barra casi invisible con lo que Ecuador podría colocar."
+      },
+      {
+        "titulo": "…pero Ecuador no tiene permiso para venderle",
+        "texto": "La OMSA solo reconoce a Galápagos como libre de peste porcina clásica. Brasil y Costa Rica entraron siendo libres y tardaron unos 7 años desde el protocolo hasta el primer envío. Ecuador aún no tiene protocolo.",
+        "descripcion": "Gráfico: años desde el inicio del protocolo sanitario hasta el primer envío a China: Brasil 7, Costa Rica 7; Chile entró en 2011; Ecuador sin protocolo."
+      },
+      {
+        "titulo": "Y cada kilo perdería dinero",
+        "texto": "China paga {fob} USD por kilo; la víscera vale {offal} en Ecuador y procesarla, congelarla y llevarla a puerto cuesta {costos}. Margen: {margen} USD por kilo. Con margen negativo, más volumen es más pérdida: el VAN es negativo en {neg} de {de} escenarios.",
+        "descripcion": "Gráfico de cascada: precio en China menos valor local de la víscera menos costos da un margen negativo por kilo."
+      },
+      {
+        "titulo": "Decisión: no invertir hoy. Estas cinco señales la reabren",
+        "texto": "Basta una condición económica (víscera más barata o mejor precio en China) más las dos de acceso (zona libre y protocolo). El tablero las recalcula en cada corrida del pipeline.",
+        "descripcion": "Lista de los cinco disparadores con su estado: cuatro no cumplidos y la fiebre aftosa sin vacunación en camino."
+      }
+    ],
+    "paises": {
+      "BRA": "Brasil",
+      "CRI": "Costa Rica",
+      "CHL": "Chile",
+      "ECU": "Ecuador"
+    },
+    "disparadores": {
+      "D1": "Víscera más barata en planta",
+      "D2": "Mejor precio en China",
+      "D3": "Zona continental libre de peste porcina clásica",
+      "D4": "Protocolo sanitario firmado con China",
+      "D5": "Libre de fiebre aftosa sin vacunación"
+    },
+    "estados": {
+      "cumplido": "Cumplido",
+      "en camino": "En camino",
+      "no cumplido": "No cumplido"
+    },
+    "ejes": {
+      "participacion": "% del valor importado por China",
+      "millonesT": "Millones de toneladas",
+      "usdKg": "USD por kilo",
+      "anios": "años"
+    },
+    "waterfall": [
+      "China paga",
+      "Víscera en Ecuador",
+      "Proceso y logística",
+      "Margen"
+    ],
+    "sinProtocolo": "Sin protocolo · solo Galápagos es libre",
+    "ecuadorBarra": "Ecuador",
+    "hoy": "Hoy",
+    "umbral": "umbral",
+    "fuente": "Datos reales del proyecto al {fecha}: UN Comtrade (datos espejo), USDA, INEC, OMSA y Agrocalidad. AgroPorc Ecuador es una empresa ficticia.",
+    "titulo": "La historia en seis pasos",
+    "intro": "Baja despacio: cada paso cambia el gráfico."
   }
 }

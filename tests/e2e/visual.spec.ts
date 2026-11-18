@@ -26,7 +26,7 @@ test.describe('visual y accesibilidad', () => {
 
   test('sin scroll horizontal de 320 a 1440 px (ES y EN)', async ({ page }) => {
     test.skip(test.info().project.name !== 'escritorio')
-    for (const ruta of ['/es', '/en', '/es/proyectos/shrimp-intelligence-ecuador', '/es/contacto']) {
+    for (const ruta of ['/es', '/en', '/es/proyectos/shrimp-intelligence-ecuador', '/es/proyectos/pork-to-china', '/es/contacto']) {
       await page.goto(ruta)
       for (let w = 320; w <= 1440; w += 40) {
         await page.setViewportSize({ width: w, height: 800 })

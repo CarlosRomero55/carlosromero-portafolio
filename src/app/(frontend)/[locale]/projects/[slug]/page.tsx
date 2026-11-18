@@ -4,10 +4,12 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { Grafico } from '@/components/Grafico'
 import { Pagina } from '@/components/Pagina'
 import { Prosa } from '@/components/Prosa'
+import HistoriaCerdo, { type TextosHistoria } from '@/components/HistoriaCerdo'
 import SimuladorChina from '@/components/SimuladorChina'
 import { Ventana } from '@/components/Ventana'
 import type { Locale } from '@/i18n/routing'
 import { getProyecto, getProyectos, getSlugAlterno, type RichText } from '@/lib/data/public'
+import { cifrasHistoria } from '@/lib/historia-cerdo'
 import { metadatos } from '@/lib/metadatos'
 import { otroLocale, ruta, rutaProyecto, type Alternas } from '@/lib/rutas'
 
@@ -158,6 +160,49 @@ export default async function DetalleProyecto({ params }: P) {
               regiones: t('simRegiones'),
             }}
           />
+        </>
+      ),
+    })
+  }
+  if (p.simulador === 'cerdo-historia') {
+    const h = await getTranslations({ locale, namespace: 'historiaCerdo' })
+    const c = cifrasHistoria()
+    const n = (v: number, dec = 0) =>
+      v.toLocaleString(locale === 'es' ? 'es-EC' : 'en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec })
+    const usd = (v: number) => (v < 0 ? '−' : '') + n(Math.abs(v), 2)
+    const valores: Record<string, string>[] = [
+      { antes: n(c.antes, 1), despues: n(c.despues, 1) },
+      { p18: n(c.p18, 1), p20: n(c.p20, 1), ultimos: n(c.ultimos, 0) },
+      { toneladas: n(c.toneladas / 1e6, 2), anio: String(c.anioMercado), min: n(c.ecuadorMin), max: n(c.ecuadorMax), pct: n(c.pctEcuador, 2) },
+      {},
+      { fob: usd(c.fob), offal: usd(c.offal), costos: usd(c.costs), margen: usd(c.margin), neg: String(c.vanNeg), de: String(c.escenarios) },
+      {},
+    ]
+    const claves = ['BRA', 'CRI', 'CHL', 'ECU', 'D1', 'D2', 'D3', 'D4', 'D5'] as const
+    const textos: TextosHistoria = {
+      pasos: valores.map((v, i) => ({
+        titulo: h(`pasos.${i}.titulo`),
+        texto: h(`pasos.${i}.texto`, v),
+        descripcion: h(`pasos.${i}.descripcion`),
+      })),
+      paises: Object.fromEntries(claves.slice(0, 4).map((k) => [k, h(`paises.${k}`)])) as TextosHistoria['paises'],
+      disparadores: Object.fromEntries(claves.slice(4).map((k) => [k, h(`disparadores.${k}`)])) as TextosHistoria['disparadores'],
+      estados: { cumplido: h('estados.cumplido'), 'en camino': h('estados.en camino'), 'no cumplido': h('estados.no cumplido') },
+      ejes: { participacion: h('ejes.participacion'), millonesT: h('ejes.millonesT'), usdKg: h('ejes.usdKg'), anios: h('ejes.anios') },
+      waterfall: [0, 1, 2, 3].map((i) => h(`waterfall.${i}`)) as TextosHistoria['waterfall'],
+      sinProtocolo: h('sinProtocolo'),
+      ecuadorBarra: h('ecuadorBarra'),
+      hoy: h('hoy'),
+      umbral: h('umbral'),
+      fuente: h('fuente', { fecha: fecha(`${c.fecha}T12:00:00Z`) }),
+    }
+    secciones.push({
+      clave: 'historia',
+      titulo: h('titulo'),
+      contenido: (
+        <>
+          <p>{h('intro')}</p>
+          <HistoriaCerdo locale={locale} textos={textos} />
         </>
       ),
     })

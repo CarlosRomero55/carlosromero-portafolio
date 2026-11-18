@@ -11,9 +11,11 @@ export const PAGINAS = [
 export const TODAS = [
   ...PAGINAS.flat(),
   '/es/proyectos/shrimp-intelligence-ecuador',
+  '/es/proyectos/pork-to-china',
   '/es/proyectos/sistema-escolar',
   '/es/proyectos?tipo=web',
   '/en/projects/shrimp-intelligence-ecuador',
+  '/en/projects/pork-to-china',
   '/en/projects/school-management-system',
   '/es/articulos/cuando-las-fuentes-no-coinciden',
   '/en/articles/when-sources-dont-match',

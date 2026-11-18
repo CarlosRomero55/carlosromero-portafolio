@@ -219,5 +219,76 @@
     "publicado": "Published {fecha}",
     "relacionado": "Related project",
     "verCaso": "View the case"
+  },
+  "historiaCerdo": {
+    "pasos": [
+      {
+        "titulo": "The trade war opens a window",
+        "texto": "After China's 2025 tariffs, the United States went from {antes}% to {despues}% of the pork offal China buys. Other suppliers are taking that space.",
+        "descripcion": "Chart: monthly US share of the value of China's pork-offal imports, 2015–2026, with the 2025 cut highlighted."
+      },
+      {
+        "titulo": "But windows close",
+        "texto": "In 2018 the US lost {p18} share points, and in 2020 it won back {p20} when China began granting exclusions. In recent months it is back to about {ultimos}% of the value.",
+        "descripcion": "Chart: the same series with the 2018 and 2020 cuts highlighted (interrupted time series)."
+      },
+      {
+        "titulo": "China buys a lot…",
+        "texto": "China imported {toneladas} million tonnes of frozen pork offal in {anio}. What Ecuador could place, according to the model: {min} to {max} tonnes a year, just {pct}%.",
+        "descripcion": "Chart: China's yearly pork-offal imports, 2018–2025, next to an almost invisible bar for what Ecuador could place."
+      },
+      {
+        "titulo": "…but Ecuador isn't allowed to sell to it",
+        "texto": "The WOAH recognizes only the Galápagos as free of classical swine fever. Brazil and Costa Rica were free when they got in, and it took them about 7 years from protocol to first shipment. Ecuador has no protocol yet.",
+        "descripcion": "Chart: years from the start of the sanitary protocol to the first shipment to China: Brazil 7, Costa Rica 7; Chile got in in 2011; Ecuador has no protocol."
+      },
+      {
+        "titulo": "And every kilo would lose money",
+        "texto": "China pays {fob} USD per kilo; the offal is worth {offal} in Ecuador, and processing, freezing and shipping it to port costs {costos}. Margin: {margen} USD per kilo. With a negative margin, more volume means more loss: NPV is negative in {neg} of {de} scenarios.",
+        "descripcion": "Waterfall chart: price in China minus local value of the offal minus costs gives a negative margin per kilo."
+      },
+      {
+        "titulo": "Decision: don't invest today. These five signals reopen it",
+        "texto": "It takes one economic condition (cheaper offal or a better price in China) plus both access conditions (free zone and protocol). The dashboard recomputes them on every pipeline run.",
+        "descripcion": "List of the five triggers and their status: four not met and foot-and-mouth disease freedom without vaccination on track."
+      }
+    ],
+    "paises": {
+      "BRA": "Brazil",
+      "CRI": "Costa Rica",
+      "CHL": "Chile",
+      "ECU": "Ecuador"
+    },
+    "disparadores": {
+      "D1": "Cheaper offal at the plant",
+      "D2": "Better price in China",
+      "D3": "Continental zone free of classical swine fever",
+      "D4": "Sanitary protocol signed with China",
+      "D5": "Free of foot-and-mouth disease without vaccination"
+    },
+    "estados": {
+      "cumplido": "Met",
+      "en camino": "On track",
+      "no cumplido": "Not met"
+    },
+    "ejes": {
+      "participacion": "% of the value imported by China",
+      "millonesT": "Million tonnes",
+      "usdKg": "USD per kilo",
+      "anios": "years"
+    },
+    "waterfall": [
+      "China pays",
+      "Offal in Ecuador",
+      "Processing & logistics",
+      "Margin"
+    ],
+    "sinProtocolo": "No protocol · only the Galápagos is free",
+    "ecuadorBarra": "Ecuador",
+    "hoy": "Today",
+    "umbral": "threshold",
+    "fuente": "Real project data as of {fecha}: UN Comtrade (mirror data), USDA, INEC, WOAH and Agrocalidad. AgroPorc Ecuador is a fictitious company.",
+    "titulo": "The story in six steps",
+    "intro": "Scroll slowly: each step changes the chart."
   }
 }

@@ -200,6 +200,7 @@ export const Proyectos: CollectionConfig = {
       options: [
         { label: 'Ninguno', value: 'ninguno' },
         { label: 'Riesgo China 2024 (Shrimp)', value: 'china-2024' },
+        { label: 'Historia por pasos (Pork to China)', value: 'cerdo-historia' },
       ],
     },
     {

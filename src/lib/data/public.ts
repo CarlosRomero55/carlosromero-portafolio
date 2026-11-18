@@ -64,7 +64,7 @@ export type ProyectoDetalle = ProyectoTarjeta & {
   ficha: { tipo: string | null; periodo: string | null; fuentesDatos: string | null; calidad: string | null }
   pasos: { etiqueta: string; titulo: string; texto: string | null; color: 'ninguno' | 'bronze' | 'silver' | 'gold' }[]
   decisiones: { titulo: string; texto: string }[]
-  simulador: 'ninguno' | 'china-2024'
+  simulador: 'ninguno' | 'china-2024' | 'cerdo-historia'
   enlaces: { texto: string; url: string }[]
   contieneDatosSimulados: boolean
   fuentes: { nombre: string; url: string; fechaConsulta: string }[]
@@ -308,7 +308,7 @@ export const getProyecto = cacheado(
       decisiones: filas(d.decisiones)
         .map((f) => ({ titulo: str(f.titulo), texto: str(f.texto) }))
         .filter((f) => f.titulo && f.texto),
-      simulador: d.simulador === 'china-2024' ? 'china-2024' : 'ninguno',
+      simulador: d.simulador === 'china-2024' || d.simulador === 'cerdo-historia' ? d.simulador : 'ninguno',
       enlaces: filas(d.enlaces)
         .map((f) => ({ texto: str(f.texto), url: https(f.url) ?? '' }))
         .filter((f) => f.texto && f.url),
