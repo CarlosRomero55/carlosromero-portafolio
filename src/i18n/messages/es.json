@@ -144,7 +144,9 @@
     "simLeyendaReal": "Real 2024",
     "simLeyendaEsc": "Escenario",
     "simRegiones": "Valor exportado por región",
-    "demoLenta": "La demo está en un servidor gratuito: la primera carga puede tardar cerca de un minuto."
+    "demoLenta": "La demo está en un servidor gratuito: la primera carga puede tardar cerca de un minuto.",
+    "historiaTitulo": "La historia en 6 gráficos",
+    "historiaIntro": "Baja despacio: cada paso cambia el gráfico. Todas las cifras salen del pipeline del proyecto y llevan su fuente."
   },
   "contacto": {
     "titulo": "Contacto",

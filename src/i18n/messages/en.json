@@ -144,7 +144,9 @@
     "simLeyendaReal": "Actual 2024",
     "simLeyendaEsc": "Scenario",
     "simRegiones": "Export value by region",
-    "demoLenta": "The demo runs on a free server: the first load can take about a minute."
+    "demoLenta": "The demo runs on a free server: the first load can take about a minute.",
+    "historiaTitulo": "The story in 6 charts",
+    "historiaIntro": "Scroll slowly: each step changes the chart. Every figure comes from the project’s pipeline and cites its source."
   },
   "contacto": {
     "titulo": "Contact",

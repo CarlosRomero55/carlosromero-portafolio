@@ -31,7 +31,7 @@ test.describe('proyectos, casos y catálogo', () => {
     await expect(page.locator('[data-proyecto="shrimp-intelligence-ecuador"]')).toBeVisible()
     await expect(page.locator('[data-proyecto="sistema-escolar"]')).toHaveCount(0)
     await page.goto('/es/proyectos?tipo=<script>')
-    await expect(page.locator('[data-proyecto]')).toHaveCount(5)
+    await expect(page.locator('[data-proyecto]')).toHaveCount(6)
   })
 
   test('toda la tarjeta lleva al caso y el enlace de demo abre aparte', async ({ page }) => {
@@ -55,5 +55,16 @@ test.describe('proyectos, casos y catálogo', () => {
   test('el caso trae vista previa para compartir (og:image)', async ({ request }) => {
     const html = await (await request.get('/es/proyectos/shrimp-intelligence-ecuador')).text()
     expect(html).toMatch(/<meta property="og:image" content="[^"]*\/proyectos\/shrimp\/01_resumen\.webp"/)
+  })
+
+  test('Pork to China cuenta su historia en 6 pasos, con datos accesibles y fuentes', async ({ page }) => {
+    await page.goto('/es/proyectos/pork-to-china')
+    await expect(page.locator('.hp-paso')).toHaveCount(6)
+    await expect(page.locator('.hp-paso .sr-only table')).toHaveCount(6)
+    await expect(page.locator('.hp-fuente')).toHaveCount(7)
+    await expect(page.locator('.hp-disparadores li')).toHaveCount(5)
+    await expect(page.getByText('24 escenarios', { exact: false }).first()).toBeVisible()
+    await page.goto('/en/projects/pork-to-china')
+    await expect(page.getByRole('heading', { name: 'The story in 6 charts' })).toBeVisible()
   })
 })

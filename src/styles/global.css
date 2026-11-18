@@ -1678,3 +1678,224 @@ details.datos-tabla summary {
 .linea__logros li::marker {
   color: var(--cy);
 }
+
+/* ——— Historia "Pork to China" (scrollytelling) ——— */
+.hp-scrolly {
+  display: block;
+}
+.hp-fijo {
+  display: none;
+}
+.hp-paso {
+  padding: var(--space-4) 0;
+  border-top: 1px dashed var(--line);
+}
+.hp-paso:first-child {
+  border-top: 0;
+}
+.hp-paso h3 {
+  margin: 0 0 var(--space-2);
+  font-size: 1.35rem;
+}
+.hp-num,
+.hp-fijo__num {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--cy);
+  margin: 0 0 var(--space-1);
+}
+.hp-fuente {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: var(--space-2);
+}
+.hp-grafico-paso {
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3);
+  background: var(--s1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+.hp-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.hp-svg text {
+  font-family: var(--font);
+  fill: var(--fg-2);
+}
+.hp-etq {
+  font-size: 14px;
+}
+.hp-etq--chica {
+  font-size: 12.5px;
+}
+.hp-etq--fuerte {
+  font-weight: 700;
+  fill: var(--fg) !important;
+}
+.hp-valor {
+  font-family: var(--mono) !important;
+  font-size: 13px;
+  fill: var(--fg) !important;
+}
+.hp-valor--grande {
+  font-size: 16px;
+  font-weight: 700;
+}
+.hp-valor--celda {
+  font-size: 13px;
+  font-weight: 600;
+}
+.hp-nota {
+  font-size: 12px;
+  fill: var(--muted) !important;
+}
+.hp-valor--dentro {
+  fill: var(--bg) !important;
+  font-weight: 700;
+}
+.hp-txt-riesgo {
+  fill: var(--riesgo) !important;
+}
+.hp-eje {
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+}
+.hp-guia {
+  stroke: var(--muted);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+.hp-gana {
+  fill: var(--cy);
+  stroke: var(--cy);
+}
+.hp-riesgo {
+  fill: var(--riesgo);
+  stroke: var(--riesgo);
+}
+.hp-neutro {
+  fill: var(--line-strong);
+}
+.hp-rango {
+  fill: var(--line-strong);
+  opacity: 0.45;
+}
+.hp-ecuador {
+  fill: transparent;
+  stroke: var(--vio);
+  stroke-width: 2;
+  stroke-dasharray: 5 3;
+}
+.hp-ic {
+  stroke-width: 3;
+  fill: none;
+}
+.hp-cierre {
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+}
+.hp-cierre h3 {
+  margin-top: 0;
+}
+.hp-disparadores {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-3) 0 0;
+  display: grid;
+  gap: var(--space-2);
+}
+.hp-disparadores li {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+.hp-disparadores strong {
+  display: block;
+  font-weight: 600;
+}
+.hp-codigo {
+  font-family: var(--mono);
+  color: var(--vio);
+}
+.hp-hoy {
+  display: block;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.hp-estado {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--riesgo);
+  color: var(--riesgo);
+  white-space: nowrap;
+}
+[data-estado='en-camino'] .hp-estado {
+  border-color: var(--cy);
+  color: var(--cy);
+}
+@media (max-width: 560px) {
+  .hp-disparadores li {
+    grid-template-columns: auto 1fr;
+  }
+  .hp-estado {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+/* Escritorio con JS y sin movimiento reducido: gráfico fijo a la izquierda. */
+@media (min-width: 960px) and (prefers-reduced-motion: no-preference) {
+  .hp-scrolly--activo {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: var(--space-5);
+    align-items: start;
+  }
+  .hp-scrolly--activo .hp-fijo {
+    display: block;
+    position: sticky;
+    top: 6rem;
+    padding: var(--space-4);
+    overflow: hidden;
+    background: var(--s1);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+  }
+  .hp-fijo__g {
+    position: absolute;
+    inset: var(--space-4) var(--space-4) 2.5rem;
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s ease;
+  }
+  .hp-fijo__g--visible {
+    position: relative;
+    inset: auto;
+    opacity: 1;
+    transform: none;
+  }
+  .hp-scrolly--activo .hp-paso {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hp-scrolly--activo .hp-paso:last-child {
+    min-height: 60vh;
+  }
+  .hp-scrolly--activo .hp-grafico-paso {
+    display: none;
+  }
+}

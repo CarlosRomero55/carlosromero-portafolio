@@ -5,6 +5,7 @@ import { Grafico } from '@/components/Grafico'
 import { Pagina } from '@/components/Pagina'
 import { Prosa } from '@/components/Prosa'
 import SimuladorChina from '@/components/SimuladorChina'
+import { HistoriaPork } from '@/components/historia-pork/Historia'
 import { Ventana } from '@/components/Ventana'
 import type { Locale } from '@/i18n/routing'
 import { getProyecto, getProyectos, getSlugAlterno, type RichText } from '@/lib/data/public'
@@ -158,6 +159,18 @@ export default async function DetalleProyecto({ params }: P) {
               regiones: t('simRegiones'),
             }}
           />
+        </>
+      ),
+    })
+  }
+  if (p.simulador === 'historia-pork') {
+    secciones.push({
+      clave: 'historia',
+      titulo: t('historiaTitulo'),
+      contenido: (
+        <>
+          <p>{t('historiaIntro')}</p>
+          <HistoriaPork locale={locale} />
         </>
       ),
     })

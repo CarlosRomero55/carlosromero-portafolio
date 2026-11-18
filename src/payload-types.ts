@@ -304,7 +304,7 @@ export interface Proyecto {
         id?: string | null;
       }[]
     | null;
-  simulador?: ('ninguno' | 'china-2024') | null;
+  simulador?: ('ninguno' | 'china-2024' | 'historia-pork') | null;
   demo?: string | null;
   enlaces?:
     | {
