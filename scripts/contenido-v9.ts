@@ -21,6 +21,7 @@ const vacio = (v: unknown) =>
   v === null || v === undefined || v === '' || (Array.isArray(v) && v.length === 0) ||
   (typeof v === 'object' && v !== null && 'root' in v && !/"text":"[^"]*\S/.test(JSON.stringify(v)))
 
+const DEMO = 'https://pork-to-china-gge74hkshbuxj3q5ppakat.streamlit.app/'
 const PDF = 'https://github.com/CarlosRomero55/pork-to-china/blob/main/docs/policy_brief.pdf'
 
 async function main() {
@@ -126,6 +127,7 @@ async function main() {
           { titulo: 'Compras', texto: 'Validar con 2 o 3 camales el precio real de la víscera, el supuesto que más mueve el resultado.' },
         ],
         enlaces: [{ texto: 'Policy brief (PDF, 2 páginas)', url: PDF }],
+        demo: DEMO,
         repositorio: REPO,
         contieneDatosSimulados: false,
         seo: {
@@ -135,6 +137,12 @@ async function main() {
       } as never,
     })) as unknown as Rec
     cambios.push('Pork to China: creado y publicado en español')
+  }
+
+  // Tablero en línea (Streamlit Community Cloud): se agrega si el proyecto ya existía sin demo.
+  if (!proyecto.demo) {
+    await payload.update({ collection: 'proyectos', id: proyecto.id as number, locale: 'es', data: { demo: DEMO } as never })
+    cambios.push('Pork to China: demo en línea agregada')
   }
 
   // ——— Proyecto en inglés ———
