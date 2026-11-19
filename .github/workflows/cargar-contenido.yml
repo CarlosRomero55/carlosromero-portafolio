@@ -86,6 +86,10 @@ jobs:
         env:
           PUBLICAR_INGLES: ${{ inputs.publicar_ingles }}
         run: pnpm contenido:v10
+      - name: Tres artículos de datos (v11)
+        env:
+          PUBLICAR_INGLES: ${{ inputs.publicar_ingles }}
+        run: pnpm contenido:v11
       - name: Siguiente paso
         run: |
           echo "### Contenido listo" >> "$GITHUB_STEP_SUMMARY"
