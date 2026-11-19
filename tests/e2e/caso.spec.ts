@@ -31,7 +31,7 @@ test.describe('proyectos, casos y catálogo', () => {
     await expect(page.locator('[data-proyecto="shrimp-intelligence-ecuador"]')).toBeVisible()
     await expect(page.locator('[data-proyecto="sistema-escolar"]')).toHaveCount(0)
     await page.goto('/es/proyectos?tipo=<script>')
-    await expect(page.locator('[data-proyecto]')).toHaveCount(6)
+    await expect(page.locator('[data-proyecto]')).toHaveCount(7)
   })
 
   test('toda la tarjeta lleva al caso y el enlace de demo abre aparte', async ({ page }) => {
